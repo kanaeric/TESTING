@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Addition of Like Fractions - JSS 1 Lesson</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <style>
+        :root {
+            --color-blue: #4285F4;
+            --color-green: #34A853;
+            --color-red: #EA4335;
+            --color-yellow: #FBBC05;
+            --color-gold: #FFC300;
+            --color-teal: #1abc9c;
+            --color-orange: #f39c12;
+            --color-violet: #8e44ad;
+            --color-deep-blue: #3498db;
+            --bg-dark: #2c3e50;
+            --bg-light: #f4f7f9;
+            --text-light: #ffffff;
+            --text-dark: #333333;
+            --font-main: 'Poppins', sans-serif;
+            --font-heading: 'Nunito', sans-serif;
+        }
+
+        /* --- General Setup & Accessibility --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-main); color: var(--text-dark); background-color: var(--bg-light); line-height: 1.7; font-size: 18px; }
+        
+        /* --- Visual & Typographic Emphasis --- */
+        .big-number { font-size: 1.8em; font-weight: 700; color: var(--color-blue); vertical-align: middle; }
+        .final-answer { display: inline-block; padding: 8px 15px; background-color: var(--color-gold); color: var(--text-dark); font-size: 1.3em; font-weight: 800; border-radius: 8px; margin-top: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transform: scale(1.02); }
+        .key-word { background-color: #f1c40f33; padding: 3px 8px; border-radius: 5px; font-weight: 600; color: var(--text-dark); }
+
+        /* --- Header & Title --- */
+        header { background: linear-gradient(135deg, #16a085, #f1c40f); color: var(--text-light); padding: 40px 20px; text-align: center; position: relative; overflow: hidden; border-bottom: 8px solid var(--color-violet); }
+        .stars { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+        .star { position: absolute; background-color: white; border-radius: 50%; animation: float 10s infinite linear; }
+        @keyframes float { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; } }
+
+        header h1 { font-family: var(--font-heading); font-size: 3rem; font-weight: 800; color: var(--bg-dark); text-shadow: 1px 1px 2px rgba(0,0,0,0.1); margin: 0; position: relative; z-index: 1; }
+        header h1 .icon { font-size: 2.5rem; vertical-align: middle; margin: 0 10px; color: var(--color-violet); }
+        
+        /* --- Beautiful Topic Title --- */
+        .lesson-topic { font-family: var(--font-heading); font-size: 2.2rem; font-weight: 700; color: var(--text-light); margin-top: 25px; padding: 10px 25px; background-color: rgba(0, 0, 0, 0.25); display: inline-block; border-radius: 50px; border: 2px solid var(--color-gold); text-shadow: 2px 2px 4px rgba(0,0,0,0.3); position: relative; z-index: 1; }
+
+        /* --- Main Content & Sections (FULL SCREEN) --- */
+        main { padding: 20px 4vw; }
+        section { background: #ffffff; margin-bottom: 30px; border-radius: 15px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08); overflow: hidden; }
+        section h2 { font-family: var(--font-heading); font-size: 2.2rem; color: var(--text-light); margin-bottom: 25px; display: flex; align-items: center; gap: 15px; padding: 20px 30px; }
+        .section-content { padding: 0 30px 30px; }
+        
+        #introduction h2 { background-color: var(--color-blue); }
+        #daily-life h2 { background-color: var(--color-teal); }
+        #key-terms h2 { background-color: var(--color-orange); }
+        #step-by-step h2 { background-color: var(--color-green); }
+        #real-life-app h2 { background-color: #e67e22; }
+        #financial-lit h2 { background-color: var(--color-violet); }
+        #math-tricks h2 { background-color: var(--color-deep-blue); }
+        #common-mistakes h2 { background-color: var(--color-red); }
+        #practice h2 { background-color: var(--color-gold); color: var(--text-dark); }
+        #summary h2 { background-color: #27ae60; }
+        #quiz-section h2 { background-color: var(--bg-dark); }
+        
+        .info-box { padding: 20px; border-radius: 10px; margin: 20px 0; font-size: 1.1em; border-left: 5px solid; }
+        .info-blue { background-color: #eaf2ff; border-color: var(--color-blue); }
+        .info-green { background-color: #e8f5e9; border-color: var(--color-green); }
+        .info-yellow { background-color: #fff8e1; border-color: var(--color-yellow); }
+        .info-red { background-color: #fce8e6; border-color: var(--color-red); }
+        .info-violet { background-color: #f3e5f5; border-color: var(--color-violet); }
+
+        /* --- Interactive Elements & Buttons --- */
+        .toggle-btn, .quiz-btn { background-color: var(--color-blue); color: var(--text-light); border: none; padding: 12px 25px; font-size: 1.1em; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; margin-top: 10px; }
+        .toggle-btn:hover, .quiz-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(66, 133, 244, 0.4); }
+        .btn-hint { background-color: var(--color-yellow); color: var(--text-dark); }
+        .btn-hint:hover { box-shadow: 0 6px 15px rgba(251, 188, 5, 0.4); }
+
+        .solution-box { display: none; margin-top: 15px; padding: 20px; background: #f9f9f9; border: 2px dashed var(--color-green); border-radius: 10px; }
+        .solution-box.visible { display: block; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- Collapsible Sections (<details>) --- */
+        details { background: #fff; border-radius: 8px; margin-bottom: 10px; border: 1px solid #e0e0e0; }
+        summary { padding: 15px; font-weight: 600; font-size: 1.2rem; cursor: pointer; list-style: none; display: flex; align-items: center; gap: 15px; }
+        summary::after { content: '\f078'; font-family: 'Font Awesome 6 Free'; font-weight: 900; transition: transform 0.3s; margin-left: auto; }
+        details[open] summary::after { transform: rotate(180deg); }
+        details div { padding: 0 20px 20px; border-top: 1px solid #eee; margin: 0 15px; }
+
+        /* --- Fraction Visualisation & Illustrations --- */
+        .illustration-container { display: flex; align-items: center; justify-content: center; gap: 20px; margin: 20px 0; flex-wrap: wrap; }
+        .illustration-svg { max-width: 100%; height: auto; }
+        .illustration-text { font-size: 1.5em; font-weight: bold; color: var(--text-dark); }
+        .svg-label { font-size: 16px; font-family: 'Poppins', sans-serif; text-anchor: middle; }
+
+        /* --- Financial Table --- */
+        .financial-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 1.1em; }
+        .financial-table th, .financial-table td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        .financial-table th { background-color: var(--bg-dark); color: var(--text-light); }
+        .financial-table tr:nth-child(even) { background-color: #f2f2f2; }
+        .financial-table .total-row { font-weight: 700; background-color: var(--color-yellow); color: var(--text-dark); }
+
+        /* --- Quiz Styling --- */
+        #quiz-container { padding: 20px; background-color: #fff; border-radius: 10px; max-width: 800px; margin: 0 auto; }
+        #question-container { margin-bottom: 20px; }
+        #question-text { font-size: 1.4em; font-weight: 600; margin-bottom: 20px; }
+        .options-container { display: grid; gap: 10px; }
+        .option-btn { width: 100%; padding: 15px; font-size: 1.1em; text-align: left; border: 2px solid #ddd; border-radius: 8px; background-color: #fff; cursor: pointer; transition: all 0.2s ease; }
+        .option-btn:hover { border-color: var(--color-blue); background-color: #eaf2ff; }
+        .option-btn.correct { background-color: #d4edda; border-color: #c3e6cb; color: #155724; font-weight: bold; }
+        .option-btn.incorrect { background-color: #f8d7da; border-color: #f5c6cb; color: #721c24; font-weight: bold; }
+        #explanation-container { display: none; margin-top: 20px; padding: 15px; border-radius: 8px; background-color: #e9ecef; }
+        #explanation-container.visible { display: block; }
+        #quiz-controls { margin-top: 25px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; }
+        #score-container { margin-top: 20px; font-size: 1.5em; font-weight: bold; text-align: center; }
+        .quiz-btn.next { background-color: var(--color-green); }
+        .quiz-btn.next:hover { box-shadow: 0 6px 15px rgba(52, 168, 83, 0.4); }
+        .quiz-btn.reset { background-color: var(--color-red); }
+        .quiz-btn.reset:hover { box-shadow: 0 6px 15px rgba(234, 67, 53, 0.4); }
+
+        /* --- Footer --- */
+        footer { background: var(--bg-dark); color: var(--text-light); text-align: center; padding: 30px 20px; margin-top: 40px; }
+        
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            body { font-size: 16px; }
+            header h1 { font-size: 2.2rem; }
+            .lesson-topic { font-size: 1.4rem; padding: 8px 15px; }
+            section h2 { font-size: 1.6rem; padding: 15px 20px; }
+            .section-content { padding: 0 20px 20px; }
+            #quiz-controls { flex-direction: column; }
+            .quiz-btn { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="stars"></div>
+        <h1>
+            <i class="fas fa-magic icon"></i>
+            Understanding Fractions Made Easy
+            <i class="fas fa-magic icon"></i>
+        </h1>
+        <h2 class="lesson-topic">⭐ Addition of Like Fractions ⭐</h2>
+    </header>
+
+    <main>
+        <!-- 1. Introduction -->
+        <section id="introduction">
+            <h2><i class="fas fa-lightbulb"></i> 1. Introduction (Do you know that …)</h2>
+            <div class="section-content">
+                <div class="info-box info-blue">
+                    <p>...you already know how to add like fractions? If you can count, you can do this! "Like fractions" are fractions that are part of the same family because they share the same denominator. Adding them is as simple as counting pieces of the same size.</p>
+                </div>
+                <h3>Example: What is <span class="big-number">³/₈</span> + <span class="big-number">²/₈</span>?</h3>
+                <p>Imagine <span class="key-word">Emeka</span> eats <span class="big-number">³/₈</span> of a pizza 🍕, and <span class="key-word">Funke</span> eats <span class="big-number">²/₈</span> of the same pizza. Since all the slices are the same size (eighths), we can just count the total number of slices eaten!</p>
+                <div class="illustration-container">
+                    <svg class="illustration-svg" width="120" height="120" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="45" fill="#fdebd0" stroke="#d35400" stroke-width="2"/>
+                        <path d="M 50 50 L 50 5 L 93 28 Z" fill="#f39c12"/>
+                        <path d="M 50 50 L 93 28 L 93 72 Z" fill="#f39c12"/>
+                        <path d="M 50 50 L 93 72 L 50 95 Z" fill="#f39c12"/>
+                        <text x="30" y="80" class="svg-label" font-weight="bold">³/₈</text>
+                    </svg>
+                    <span class="illustration-text">+</span>
+                    <svg class="illustration-svg" width="120" height="120" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="45" fill="#eafaf1" stroke="#27ae60" stroke-width="2"/>
+                        <path d="M 50 50 L 50 5 L 7 28 Z" fill="#2ecc71"/>
+                        <path d="M 50 50 L 7 28 L 7 72 Z" fill="#2ecc71"/>
+                        <text x="70" y="80" class="svg-label" font-weight="bold">²/₈</text>
+                    </svg>
+                    <span class="illustration-text">= ❓</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Daily Life Uses -->
+        <section id="daily-life">
+            <h2><i class="fas fa-users"></i> 2. 5 places where the above topic is used in our daily life with example.</h2>
+            <div class="section-content">
+                <details>
+                    <summary><i class="fas fa-share-alt" style="color: #e91e63;"></i> Sharing Food</summary>
+                    <div><p>If you eat <span class="big-number">¹/₄</span> of a cake and your friend eats <span class="big-number">¹/₄</span>, you have both eaten <span class="key-word">¹/₄ + ¹/₄ = ²/₄</span> (or half) of the cake.</p></div>
+                </details>
+                <details>
+                    <summary><i class="fas fa-tasks" style="color: #03a9f4;"></i> Completing a Task</summary>
+                    <div><p><span class="key-word">Amina</span> does <span class="big-number">³/₁₀</span> of her homework in the morning and <span class="big-number">⁴/₁₀</span> in the afternoon. In total, she has completed <span class="key-word">³/₁₀ + ⁴/₁₀ = ⁷/₁₀</span> of her homework.</p></div>
+                </details>
+                <details>
+                    <summary><i class="fas-fa-ruler-combined" style="color: #795548;"></i> Measuring and Sewing</summary>
+                    <div><p>A tailor uses <span class="big-number">³/₈</span> of a yard of fabric for a pocket and <span class="big-number">¹/₈</span> of a yard for a collar. He has used <span class="key-word">³/₈ + ¹/₈ = ⁴/₈</span> (or half) a yard in total.</p></div>
+                </details>
+                 <details>
+                    <summary><i class="fas fa-gas-pump" style="color: #f44336;"></i> Using Fuel</summary>
+                    <div><p>If a car uses <span class="big-number">¹/₄</span> of a tank of petrol to go to the market and <span class="big-number">¹/₄</span> of a tank to come back, it has used <span class="key-word">¹/₄ + ¹/₄ = ²/₄</span> of a tank.</p></div>
+                </details>
+                <details>
+                    <summary><i class="fas fa-clock" style="color: #9c27b0;"></i> Tracking Time</summary>
+                    <div><p>If a football match half is <span class="big-number">³/₄</span> of an hour and added time is <span class="big-number">¹/₄</span> of an hour, the total time played is <span class="key-word">³/₄ + ¹/₄ = ⁴/₄</span>, which is 1 whole hour.</p></div>
+                </details>
+            </div>
+        </section>
+        
+        <!-- 3. Key Terms and Definitions -->
+        <section id="key-terms">
+            <h2><i class="fas fa-book-open"></i> 3. Key terms and definitions.</h2>
+            <div class="section-content">
+                <div class="info-box info-yellow">
+                    <p>Knowing these simple terms will make you a fractions expert in no time! 🎓</p>
+                </div>
+                <details>
+                    <summary><i class="fas fa-equals" style="color: #4caf50;"></i> Like Fractions</summary>
+                    <div><p>These are fractions that have the <strong>exact same denominator</strong>. They are from the same "family". Examples: <span class="big-number">¹/₈</span>, <span class="big-number">³/₈</span>, and <span class="big-number">⁷/₈</span> are all like fractions.</p></div>
+                </details>
+                <details>
+                    <summary><i class="fas fa-arrow-up-1-9" style="color: #e91e63;"></i> Numerator</summary>
+                    <div><p>The <strong>top number</strong> in a fraction. It tells you how many pieces you have. In <span class="big-number">⁵/₆</span>, the numerator is <span class="key-word">5</span>.</p></div>
+                </details>
+                <details>
+                    <summary><i class="fas fa-arrow-down-1-9" style="color: #2196f3;"></i> Denominator</summary>
+                    <div><p>The <strong>bottom number</strong> in a fraction. It tells you the size of the pieces (how many make a whole). In <span class="big-number">⁵/₆</span>, the denominator is <span class="key-word">6</span>.</p></div>
+                </details>
+            </div>
+        </section>
+
+        <!-- 4. Step-by-step explanations and calculations -->
+        <section id="step-by-step">
+            <h2><i class="fas fa-calculator"></i> 4. Step-by-step explanations and calculations</h2>
+            <div class="section-content">
+                <div class="info-box info-green">
+                    <h3>Problem: Add <span class="big-number">³/₈</span> + <span class="big-number">²/₈</span></h3>
+                    <p>This is the simplest kind of fraction addition. Follow these easy steps!</p>
+                    
+                    <p><strong>Step 1 – Add the Numerators.</strong></p>
+                    <p>The top numbers are the only ones you need to add. <br>3 + 2 = <span class="big-number">5</span>.</p>
+                    
+                    <p><strong>Step 2 – Keep the Denominator.</strong></p>
+                    <p>The denominator shows the size of the slices, and that does not change. So, it stays as <span class="key-word">8</span>.</p>
+                    
+                    <p><strong>Step 3 – Write the Final Fraction.</strong></p>
+                    <p>Combine the new numerator and the original denominator.</p>
+                    <div class="illustration-container">
+                        <svg class="illustration-svg" width="120" height="120" viewBox="0 0 100 100">
+                             <circle cx="50" cy="50" r="45" fill="#fdebd0" stroke="#d35400" stroke-width="2"/>
+                             <path d="M 50 50 L 50 5 L 93 28 Z" fill="#f39c12"/>
+                             <path d="M 50 50 L 93 28 L 93 72 Z" fill="#f39c12"/>
+                             <path d="M 50 50 L 93 72 L 50 95 Z" fill="#f39c12"/>
+                             <path d="M 50 50 L 50 5 L 7 28 Z" fill="#2ecc71"/>
+                             <path d="M 50 50 L 7 28 L 7 72 Z" fill="#2ecc71"/>
+                             <text x="40" y="80" class="svg-label" font-weight="bold">⁵/₈</text>
+                        </svg>
+                    </div>
+                    <p>The final answer is <span class="final-answer">⁵/₈</span>.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Real-life situation -->
+        <section id="real-life-app">
+            <h2><i class="fas fa-chart-pie"></i> 5. Real-life situation</h2>
+            <div class="section-content">
+                <div class="info-box" style="background-color: #fef9e7; border-color: #f1c40f;">
+                    <p><strong>Problem:</strong> At a birthday party, <span class="key-word">Bola</span> cuts a cake into 12 equal slices. <span class="key-word">Amina</span> eats <span class="big-number">²/₁₂</span> of the cake, and <span class="key-word">Emeka</span> eats <span class="big-number">³/₁₂</span>. What fraction of the cake did they eat altogether?</p>
+                    <button class="toggle-btn" onclick="toggleSolution('solution1')">Show Solution</button>
+                    <div id="solution1" class="solution-box">
+                        <p><strong>Step 1: Add the numerators.</strong> We are adding the number of slices they ate.<br> 2 (Amina's slices) + 3 (Emeka's slices) = <span class="big-number">5</span>.</p>
+                        <p><strong>Step 2: Keep the denominator.</strong> The cake was cut into 12 slices, so the denominator stays <span class="key-word">12</span>.</p>
+                        <p><strong>Final Answer:</strong> Together, they ate <span class="final-answer">⁵/₁₂</span> of the cake.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 6. Financial literacy problem -->
+        <section id="financial-lit">
+            <h2><i class="fas fa-money-bill-wave"></i> 6. Financial literacy problem</h2>
+            <div class="section-content">
+                <div class="info-box info-violet">
+                     <p><strong>Problem:</strong> <span class="key-word">Chinedu</span> is saving his pocket money. In the first week, he saved <span class="big-number">¹/₁₀</span> of his goal. In the second week, he saved <span class="big-number">³/₁₀</span> of his goal. If his total savings goal is <span class="key-word">₦5,000</span>, how much money has he saved so far?</p>
+                     <button class="toggle-btn" onclick="toggleSolution('solution2')">Show Solution</button>
+                     <div id="solution2" class="solution-box">
+                        <p><strong>Part 1: Find the total fraction of his goal saved.</strong></p>
+                        <p>Add the fractions: <span class="big-number">¹/₁₀</span> + <span class="big-number">³/₁₀</span>.<br>
+                        Add numerators: 1 + 3 = 4.<br>
+                        Keep the denominator: 10.<br>
+                        He has saved <span class="key-word">⁴/₁₀</span> of his goal.</p>
+                        
+                        <p><strong>Part 2: Calculate the amount of money saved.</strong></p>
+                        <p>We need to find <span class="big-number">⁴/₁₀</span> of <span class="key-word">₦5,000</span>.<br>
+                        Amount Saved = <span class="big-number">⁴/₁₀</span> × 5,000.<br>
+                        This means (4 × 5,000) ÷ 10 = 20,000 ÷ 10 = <span class="big-number">2,000</span>.</p>
+                        
+                        <p><strong>Final Answer:</strong> Chinedu has saved <span class="final-answer">₦2,000</span> so far.</p>
+                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. Mathematics tricks -->
+        <section id="math-tricks">
+            <h2><i class="fas fa-magic-wand-sparkles"></i> 7. Mathematics tricks</h2>
+            <div class="section-content">
+                <div class="info-box info-blue">
+                    <h3>Trick: Simplify Before You Finish!</h3>
+                    <p>Sometimes, your answer can be simplified to an easier fraction.</p>
+                    <p><strong>Example:</strong> Add <span class="big-number">³/₈</span> + <span class="big-number">¹/₈</span>.</p>
+                    <p><strong>Step 1: Add the fractions normally.</strong><br>
+                    3 + 1 = 4. The answer is <span class="big-number">⁴/₈</span>.</p>
+                    <p><strong>Step 2: Check if you can simplify.</strong><br>
+                    Can both the numerator (4) and the denominator (8) be divided by the same number? Yes! They can both be divided by 4.<br>
+                    4 ÷ 4 = <span class="big-number" style="color:#e74c3c;">1</span>.<br>
+                    8 ÷ 4 = <span class="big-number" style="color:#2980b9;">2</span>.</p>
+                    <p><strong>Final Simplified Answer:</strong> The simplest way to write the answer is <span class="final-answer">½</span>. It's the same value, just neater!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. Common mistakes to avoid -->
+        <section id="common-mistakes">
+            <h2><i class="fas fa-exclamation-triangle"></i> 8. Common mistakes to avoid</h2>
+            <div class="section-content">
+                <div class="info-box info-red">
+                    <h3>Mistake 1: Adding the Denominators</h3>
+                    <p>This is the #1 error! Remember, the denominator just tells you the name of the fraction family.</p>
+                    <p><strong>Problem:</strong> <span class="big-number">²/₇</span> + <span class="big-number">³/₇</span></p>
+                    <p><strong>Wrong Way ❌:</strong> (2+3) / (7+7) = <span class="big-number">⁵/₁₄</span>. This is incorrect!</p>
+                    <p><strong>Right Way ✅:</strong> Keep the denominator. (2+3) / 7 = <span class="final-answer">⁵/₇</span>.</p>
+                </div>
+                <div class="info-box info-red">
+                    <h3>Mistake 2: Changing the Numerator Randomly</h3>
+                    <p>Some students feel they need to change everything.</p>
+                    <p><strong>Problem:</strong> <span class="big-number">¹/₅</span> + <span class="big-number">²/₅</span></p>
+                    <p><strong>Wrong Way ❌:</strong> Thinking you need to find an LCM and changing the fractions to <span class="big-number">⁵/₂₅</span> + <span class="big-number">¹⁰/₂₅</span>. This is unnecessary work and can lead to errors.</p>
+                    <p><strong>Right Way ✅:</strong> If the denominators are already the same, just add the numerators. It's that simple! <span class="final-answer">³/₅</span>.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 9. Practice & Challenge Zone -->
+        <section id="practice">
+            <h2><i class="fas fa-pencil-alt"></i> 9. Practice & Challenge Zone</h2>
+            <div class="section-content">
+                <div class="info-box info-yellow">
+                    <h3>Practice Question</h3>
+                    <p>What is <span class="big-number">⁴/₉</span> + <span class="big-number">²/₉</span>?</p>
+                    <button class="toggle-btn" onclick="toggleSolution('solution3')">Show Solution</button>
+                    <div id="solution3" class="solution-box">
+                        <p>Add the numerators: 4 + 2 = 6.</p>
+                        <p>Keep the denominator: <span class="big-number">⁶/₉</span>.</p>
+                        <p><strong>Bonus Simplification:</strong> Both 6 and 9 can be divided by 3. 6÷3=2 and 9÷3=3. The simplest answer is <span class="final-answer">²/₃</span>.</p>
+                    </div>
+                </div>
+                <div class="info-box info-red">
+                    <h3>🤯 Challenge Problem</h3>
+                    <p>The school farm is divided into 15 plots. Class JSS 1A planted maize on <span class="big-number">⁴/₁₅</span> of the plots. Class JSS 1B planted cassava on <span class="big-number">³/₁₅</span> of the plots. Class JSS 1C planted yams on <span class="big-number">²/₁₅</span> of the plots. What fraction of the farm is still unplanted?</p>
+                    <button class="toggle-btn btn-hint" onclick="toggleSolution('hint1')">Show Hint</button>
+                    <button class="toggle-btn" onclick="toggleSolution('solution4')">Show Full Solution</button>
+                    <div id="hint1" class="solution-box"><p><strong>Hint:</strong> First, add the fractions of the farm that have been planted. Then, remember that the whole farm is <span class="key-word">¹⁵/₁₅</span>. Subtract the planted fraction from the whole.</p></div>
+                    <div id="solution4" class="solution-box">
+                        <p><strong>Step 1: Find the total fraction planted.</strong><br>
+                        Add the fractions for all three classes: <span class="big-number">⁴/₁₅</span> + <span class="big-number">³/₁₅</span> + <span class="big-number">²/₁₅</span>.<br>
+                        Add numerators: 4 + 3 + 2 = 9.<br>
+                        The total planted fraction is <span class="key-word">⁹/₁₅</span>.</p>
+                        <p><strong>Step 2: Find the unplanted fraction.</strong><br>
+                        The whole farm is <span class="big-number">¹⁵/₁₅</span>.
+                        Subtract the planted part from the whole: <span class="big-number">¹⁵/₁₅</span> - <span class="big-number">⁹/₁₅</span>.<br>
+                        Subtract numerators: 15 - 9 = 6.</p>
+                        <p><strong>Final Answer (Unsimplified):</strong> The unplanted fraction is <span class="big-number">⁶/₁₅</span>.</p>
+                        <p><strong>Final Answer (Simplified):</strong> Both 6 and 15 can be divided by 3. 6÷3=2 and 15÷3=5. The simplest answer is <span class="final-answer">⅖</span> of the farm is unplanted.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 10. Summary of steps -->
+        <section id="summary">
+            <h2><i class="fas fa-clipboard-list"></i> 10. Summary of steps</h2>
+            <div class="section-content">
+                <ul style="list-style-type: none; padding-left: 0; font-size: 1.1em;">
+                    <li style="margin-bottom: 15px;"><i class="fas fa-check-circle" style="color:#fff; margin-right:10px;"></i> <strong>Step 1: ADD THE NUMERATORS</strong> - The top numbers.</li>
+                    <li style="margin-bottom: 15px;"><i class="fas fa-check-circle" style="color:#fff; margin-right:10px;"></i> <strong>Step 2: KEEP THE DENOMINATOR</strong> - The bottom number stays the same.</li>
+                    <li style="margin-bottom: 15px;"><i class="fas fa-check-circle" style="color:#fff; margin-right:10px;"></i> <strong>Step 3: SIMPLIFY</strong> - If possible, simplify the fraction to its lowest terms.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 11. “Test Your Knowledge” Quiz -->
+        <section id="quiz-section">
+            <h2><i class="fas fa-user-graduate"></i> 11. “Test Your Knowledge” Quiz</h2>
+            <div class="section-content">
+                <div id="quiz-container">
+                    <div id="score-container">Score: 0 / 20</div>
+                    <div id="question-container">
+                        <p id="question-text">Welcome to the quiz! Click "Start Quiz" to begin.</p>
+                        <div class="options-container" id="options-container"></div>
+                    </div>
+                    <div id="explanation-container"><p id="explanation-text"></p></div>
+                    <div id="quiz-controls">
+                        <button id="start-btn" class="quiz-btn">Start Quiz</button>
+                        <button id="next-btn" class="quiz-btn next" style="display: none;">Next Question</button>
+                        <button id="reset-btn" class="quiz-btn reset" style="display: none;">Reset Quiz</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Magaby Mathematics. Making Maths Fun! 🥳</p>
+        <p>All rights reserved. Designed for an engaging learning experience.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const starsContainer = document.querySelector('.stars');
+            for (let i = 0; i < 50; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.width = `${Math.random() * 3}px`;
+                star.style.height = star.style.width;
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.animationDelay = `${Math.random() * 10}s`;
+                star.style.animationDuration = `${5 + Math.random() * 10}s`;
+                starsContainer.appendChild(star);
+            }
+        });
+
+        function toggleSolution(id) { document.getElementById(id).classList.toggle('visible'); }
+
+        const quizData = [
+            { question: "What are 'like fractions'?", options: ["Fractions with the same numerator", "Fractions that are equal", "Fractions with the same denominator", "Fractions that add up to 1"], answer: 2, explanation: "Like fractions are fractions that share the exact same denominator, meaning their 'pieces' are the same size." },
+            { question: "What is the first step in adding 1/5 and 3/5?", options: ["Add the numerators (1+3)", "Add the denominators (5+5)", "Find the LCM", "Simplify the fractions"], answer: 0, explanation: "Since the denominators are already the same, the first and only calculation step is to add the numerators." },
+            { question: "Calculate: 2/7 + 4/7", options: ["6/14", "6/7", "8/49", "2/7"], answer: 1, explanation: "Add the numerators (2 + 4 = 6) and keep the denominator (7). The answer is 6/7." },
+            { question: "Emeka drank 1/4 of a bottle of water, then drank another 1/4. What fraction did he drink in total?", options: ["2/8", "1/16", "2/4", "1/4"], answer: 2, explanation: "1/4 + 1/4 = 2/4. This can also be simplified to 1/2, but 2/4 is the direct answer." },
+            { question: "What is the most common mistake when adding like fractions?", options: ["Forgetting to add the numerators", "Adding the denominators", "Forgetting to simplify", "Writing the wrong numerator"], answer: 1, explanation: "The most frequent error is adding the denominators. The denominator should always be kept the same." },
+            { question: "Calculate: 5/12 + 6/12", options: ["11/12", "11/24", "1/12", "11/1"], answer: 0, explanation: "Add the numerators (5 + 6 = 11) and keep the denominator (12). The answer is 11/12." },
+            { question: "Amina finished 3/8 of her assignment and Bola finished 4/8 of hers. What fraction did they complete together?", options: ["7/16", "1/8", "7/8", "12/64"], answer: 2, explanation: "3/8 + 4/8 = 7/8. They completed seven-eighths of the assignment together." },
+            { question: "What is 3/10 + 3/10, simplified?", options: ["6/10", "6/20", "3/5", "Both A and C are correct"], answer: 2, explanation: "3/10 + 3/10 = 6/10. Both 6 and 10 can be divided by 2, which simplifies the fraction to 3/5." },
+            { question: "If a whole is 6/6, what is 1/6 + 5/6?", options: ["6/12", "1", "6/6", "Both B and C are correct"], answer: 3, explanation: "1/6 + 5/6 = 6/6. Any fraction where the numerator and denominator are the same is equal to 1 whole." },
+            { question: "Chinedu spends 2/5 of his money on snacks and 1/5 on a drink. What fraction of his money has he spent?", options: ["3/10", "2/25", "3/5", "1/5"], answer: 2, explanation: "2/5 + 1/5 = 3/5. He has spent three-fifths of his money." },
+            { question: "The rule for adding like fractions is: Add the numerators and...", options: ["add the denominators.", "keep the denominator.", "multiply the denominators.", "find a new denominator."], answer: 1, explanation: "The fundamental rule is to add the numerators and keep the denominator unchanged." },
+            { question: "What is 7/15 + 4/15?", options: ["11/15", "11/30", "3/15", "28/225"], answer: 0, explanation: "7 + 4 = 11. Keep the denominator 15. The answer is 11/15." },
+            { question: "A team painted 1/3 of a wall, then another 1/3. What fraction of the wall is painted?", options: ["1/9", "2/6", "2/3", "1/3"], answer: 2, explanation: "1/3 + 1/3 = 2/3. Two-thirds of the wall is painted." },
+            { question: "Simplify the answer to 5/10 + 1/10.", options: ["6/10", "3/5", "6/20", "Both A and B are correct"], answer: 1, explanation: "The sum is 6/10. Both 6 and 10 are divisible by 2, so the simplest form is 3/5." },
+            { question: "What do you get when you add 2/9, 3/9, and 1/9?", options: ["6/27", "6/9", "2/3", "Both B and C are correct"], answer: 3, explanation: "2+3+1 = 6. The sum is 6/9. This can be simplified by dividing both parts by 3 to get 2/3. Both answers are correct representations." },
+            { question: "If you have 1/2 a glass of water and add another 1/2 a glass, you have...", options: ["2/4 of a glass", "1 full glass", "2/2 of a glass", "All of the above"], answer: 3, explanation: "1/2 + 1/2 = 2/2. 2/2 is equal to 1 whole. 2/4 can be simplified to 1/2, so it's not the same. Thus, all options describing the sum are correct in some way, but '1 full glass' and '2/2' are the most direct. Let's make it clearer.",
+                question: "If you have 1/2 a glass of water and add another 1/2 a glass, you have:", options: ["2/4 of a glass", "1 full glass", "a quarter of a glass", "two glasses"], answer: 1, explanation: "1/2 + 1/2 = 2/2. A fraction where the numerator and denominator are the same is equal to 1. So you have 1 full glass."
+            }, // Corrected
+            { question: "Which of these are NOT like fractions?", options: ["1/7 and 3/7", "5/8 and 3/8", "1/4 and 1/5", "2/9 and 4/9"], answer: 2, explanation: "1/4 and 1/5 are not like fractions because their denominators (4 and 5) are different." },
+            { question: "A car's fuel gauge shows 3/8 full. The driver adds fuel equal to 4/8 of a tank. How full is the tank now?", options: ["7/8 full", "7/16 full", "1/8 full", "Completely full"], answer: 0, explanation: "3/8 + 4/8 = 7/8. The tank is now 7/8 full." },
+            { question: "What is 10/20 + 5/20 simplified?", options: ["15/20", "3/4", "15/40", "1/2"], answer: 1, explanation: "10 + 5 = 15. The sum is 15/20. Both 15 and 20 can be divided by 5. 15÷5=3 and 20÷5=4. The simplest form is 3/4." },
+            { question: "Funke reads 1/5 of a book on Monday and 2/5 on Tuesday. What fraction of the book is left to read?", options: ["3/5", "2/5", "3/10", "1/5"], answer: 1, explanation: "First, find out how much she has read: 1/5 + 2/5 = 3/5. The whole book is 5/5. So, what's left is 5/5 - 3/5 = 2/5." }
+        ];
+
+        // --- JavaScript for Quiz Interactivity (no changes needed) ---
+        const startBtn = document.getElementById('start-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const scoreContainer = document.getElementById('score-container');
+        const explanationContainer = document.getElementById('explanation-container');
+        const explanationText = document.getElementById('explanation-text');
+        
+        let shuffledQuestions, currentQuestionIndex, score;
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        startBtn.addEventListener('click', startQuiz);
+        nextBtn.addEventListener('click', () => { currentQuestionIndex++; setNextQuestion(); });
+        resetBtn.addEventListener('click', startQuiz);
+
+        function startQuiz() {
+            score = 0;
+            currentQuestionIndex = 0;
+            shuffledQuestions = [...quizData];
+            shuffleArray(shuffledQuestions);
+            startBtn.style.display = 'none';
+            nextBtn.style.display = 'inline-block';
+            resetBtn.style.display = 'inline-block';
+            updateScore();
+            setNextQuestion();
+        }
+
+        function setNextQuestion() {
+            resetState();
+            if (currentQuestionIndex < shuffledQuestions.length) {
+                showQuestion(shuffledQuestions[currentQuestionIndex]);
+            } else {
+                showFinalScore();
+            }
+        }
+        
+        function showQuestion(question) {
+            questionText.innerText = `Question ${currentQuestionIndex + 1}: ${question.question}`;
+            question.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.innerText = option;
+                button.classList.add('option-btn');
+                button.dataset.correct = index === question.answer;
+                button.addEventListener('click', selectAnswer);
+                optionsContainer.appendChild(button);
+            });
+        }
+        
+        function resetState() {
+            nextBtn.style.display = 'none';
+            explanationContainer.classList.remove('visible');
+            while (optionsContainer.firstChild) {
+                optionsContainer.removeChild(optionsContainer.firstChild);
+            }
+        }
+
+        function selectAnswer(e) {
+            const selectedBtn = e.target;
+            const correct = selectedBtn.dataset.correct === 'true';
+
+            Array.from(optionsContainer.children).forEach(button => {
+                button.disabled = true;
+                if (button.dataset.correct === 'true') {
+                    button.classList.add('correct');
+                } else {
+                     button.classList.add('incorrect');
+                }
+            });
+
+            if (correct) {
+                score++;
+                updateScore();
+            } else {
+                selectedBtn.classList.remove('incorrect');
+                selectedBtn.classList.add('incorrect');
+            }
+            
+            explanationText.innerHTML = `<strong>Explanation:</strong> ${shuffledQuestions[currentQuestionIndex].explanation}`;
+            explanationContainer.classList.add('visible');
+
+            if (shuffledQuestions.length > currentQuestionIndex + 1) {
+                nextBtn.style.display = 'inline-block';
+            } else {
+                nextBtn.style.display = 'none';
+            }
+        }
+
+        function updateScore() {
+            scoreContainer.innerText = `Score: ${score} / ${quizData.length}`;
+        }
+        
+        function showFinalScore() {
+            questionText.innerText = `Quiz Complete! You scored ${score} out of ${quizData.length}.`;
+            optionsContainer.innerHTML = '';
+            explanationContainer.classList.remove('visible');
+            nextBtn.style.display = 'none';
+            let message = "";
+            if (score / quizData.length >= 0.8) {
+                message = "Excellent work! You are a master of like fractions! 🏆";
+            } else if (score / quizData.length >= 0.5) {
+                message = "Great job! You understand the basics very well. 👍";
+            } else {
+                message = "Good try! Review the lesson and the steps, then try again. You can do it! 😊";
+            }
+            optionsContainer.innerHTML = `<p style="font-size: 1.5em; text-align: center;">${message}</p>`;
+        }
+    </script>
+</body>
+</html>

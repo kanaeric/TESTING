@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Lesson: Introduction to Ratios in Daily Life</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;900&family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* CSS RESET & CORE SETUP */
+        :root {
+            --primary-blue: #4285F4;
+            --accent-green: #0F9D58;
+            --warning-red: #DB4437;
+            --highlight-yellow: #F4B400;
+            --deep-purple: #673AB7;
+            --neon-pink: #E91E63;
+            --electric-cyan: #00BCD4;
+
+            --bg-color: #0a0a14;
+            --card-bg: #1a1a2e;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --text-color: #e0e0e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.7;
+            overflow-x: hidden;
+            -webkit-user-select: none; /* Safari */
+            -ms-user-select: none; /* IE 10+ */
+            user-select: none; /* Standard */
+        }
+        
+        /* CONTENT PROTECTION OVERLAY */
+        #protection-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.95);
+            color: white;
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 2em;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        #protection-overlay.flash {
+            opacity: 1;
+        }
+
+        /* TYPOGRAPHY & GENERAL STYLES */
+        h1, h2, h3 {
+            font-family: 'Nunito', sans-serif;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+        
+        /* NEON GLOW & COLORING */
+        .neon-text-blue { color: var(--primary-blue); text-shadow: 0 0 5px var(--primary-blue), 0 0 10px var(--primary-blue); }
+        .neon-text-green { color: var(--accent-green); text-shadow: 0 0 5px var(--accent-green), 0 0 10px var(--accent-green); }
+        .neon-text-red { color: var(--warning-red); text-shadow: 0 0 5px var(--warning-red), 0 0 10px var(--warning-red); }
+        .neon-text-yellow { color: var(--highlight-yellow); text-shadow: 0 0 5px var(--highlight-yellow), 0 0 10px var(--highlight-yellow); }
+        .neon-text-purple { color: var(--deep-purple); text-shadow: 0 0 5px var(--deep-purple), 0 0 10px var(--deep-purple); }
+        .neon-text-pink { color: var(--neon-pink); text-shadow: 0 0 5px var(--neon-pink), 0 0 10px var(--neon-pink); }
+        .neon-text-cyan { color: var(--electric-cyan); text-shadow: 0 0 5px var(--electric-cyan), 0 0 10px var(--electric-cyan); }
+        
+        .math-symbol, .keyword, .currency, .highlight-num, .ratio {
+            font-weight: 700;
+            font-size: 1.1em;
+        }
+        .math-symbol { color: var(--highlight-yellow); }
+        .keyword { color: var(--electric-cyan); }
+        .currency { color: var(--accent-green); }
+        .highlight-num { color: var(--neon-pink); }
+        .ratio { color: var(--neon-pink); font-size: 1.2em; }
+
+        /* HEADER */
+        header {
+            position: relative;
+            text-align: center;
+            padding: 120px 20px 80px;
+            overflow: hidden;
+            border-bottom: 2px solid var(--primary-blue);
+            box-shadow: 0 0 20px var(--primary-blue);
+            min-height: 40vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        #particle-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        header .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        header h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            margin-bottom: 20px;
+            color: #fff;
+            text-shadow: 0 0 8px #fff, 0 0 15px #fff, 0 0 25px var(--header-glow-color, var(--primary-blue)), 0 0 35px var(--header-glow-color, var(--primary-blue));
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        header .subtitle-box {
+            display: inline-block;
+            padding: 15px 30px;
+            background: rgba(26, 26, 46, 0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-weight: 500;
+            color: #f0f0f0;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        }
+
+        /* MAIN CONTENT & SECTIONS */
+        main {
+            padding: 40px 0;
+        }
+
+        section {
+            margin-bottom: 50px;
+            padding: 40px;
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 0 20px rgba(0,0,0,0.5), inset 0 0 15px rgba(26, 26, 46, 0.8);
+            animation: fadeIn 1s ease-out;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid;
+            border-image-slice: 1;
+        }
+
+        .section-header h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            color: #fff;
+            margin: 0;
+        }
+
+        .section-header .icon {
+            font-size: 3rem;
+            width: 70px;
+            height: 70px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.3);
+            text-shadow: 0 0 10px #fff;
+        }
+        
+        /* Color themes for each section header */
+        #introduction .section-header { border-image-source: linear-gradient(to right, var(--neon-pink), var(--deep-purple)); }
+        #introduction .icon { color: var(--neon-pink); box-shadow: 0 0 15px var(--neon-pink); }
+        #daily-life .section-header { border-image-source: linear-gradient(to right, var(--accent-green), var(--primary-blue)); }
+        #daily-life .icon { color: var(--accent-green); box-shadow: 0 0 15px var(--accent-green); }
+        #key-terms .section-header { border-image-source: linear-gradient(to right, var(--highlight-yellow), var(--warning-red)); }
+        #key-terms .icon { color: var(--highlight-yellow); box-shadow: 0 0 15px var(--highlight-yellow); }
+        #step-by-step .section-header { border-image-source: linear-gradient(to right, var(--primary-blue), var(--electric-cyan)); }
+        #step-by-step .icon { color: var(--primary-blue); box-shadow: 0 0 15px var(--primary-blue); }
+        #real-life-app .section-header { border-image-source: linear-gradient(to right, var(--deep-purple), var(--neon-pink)); }
+        #real-life-app .icon { color: var(--deep-purple); box-shadow: 0 0 15px var(--deep-purple); }
+        #financial-lit .section-header { border-image-source: linear-gradient(to right, var(--accent-green), var(--highlight-yellow)); }
+        #financial-lit .icon { color: var(--accent-green); box-shadow: 0 0 15px var(--accent-green); }
+        #math-tricks .section-header { border-image-source: linear-gradient(to right, var(--electric-cyan), var(--deep-purple)); }
+        #math-tricks .icon { color: var(--electric-cyan); box-shadow: 0 0 15px var(--electric-cyan); }
+        #common-mistakes .section-header { border-image-source: linear-gradient(to right, var(--warning-red), var(--highlight-yellow)); }
+        #common-mistakes .icon { color: var(--warning-red); box-shadow: 0 0 15px var(--warning-red); }
+        #practice .section-header { border-image-source: linear-gradient(to right, var(--primary-blue), var(--neon-pink)); }
+        #practice .icon { color: var(--primary-blue); box-shadow: 0 0 15px var(--primary-blue); }
+        #summary .section-header { border-image-source: linear-gradient(to right, var(--accent-green), var(--electric-cyan)); }
+        #summary .icon { color: var(--accent-green); box-shadow: 0 0 15px var(--accent-green); }
+        #quiz-section .section-header { border-image-source: linear-gradient(to right, var(--highlight-yellow), var(--deep-purple)); }
+        #quiz-section .icon { color: var(--highlight-yellow); box-shadow: 0 0 15px var(--highlight-yellow); }
+
+        section p, section li {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+        
+        .emoji-icon {
+            font-size: 1.5em;
+            vertical-align: middle;
+            margin: 0 5px;
+            display: inline-block;
+            animation: sparkle 3s infinite;
+        }
+
+        /* SPECIFIC COMPONENT STYLES */
+
+        /* Details/Collapsible */
+        details {
+            background: rgba(0,0,0,0.2);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            transition: background 0.3s;
+        }
+        details[open] {
+            background: rgba(0,0,0,0.4);
+        }
+        summary {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--electric-cyan);
+            cursor: pointer;
+            list-style-type: '🧑‍🍳 ';
+        }
+        summary::marker {
+            color: var(--electric-cyan);
+        }
+        summary:hover {
+            color: #fff;
+        }
+
+        /* Key Terms */
+        .term-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 15px;
+            border-left: 5px solid var(--deep-purple);
+            background: rgba(103, 58, 183, 0.1);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        .term-card .icon {
+            font-size: 2.5rem;
+            color: var(--deep-purple);
+        }
+
+        /* Step-by-Step */
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            background: rgba(66, 133, 244, 0.1);
+            border: 1px dashed var(--primary-blue);
+        }
+        .step .step-number {
+            font-family: 'Nunito', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--primary-blue);
+            line-height: 1;
+            text-shadow: 0 0 8px var(--primary-blue);
+        }
+
+        /* Solution Boxes */
+        .solution-box {
+            margin-top: 20px;
+            padding: 20px;
+            background: #0f0f18;
+            border-radius: 10px;
+            border: 1px solid var(--accent-green);
+            animation: fadeIn 0.5s ease;
+        }
+        .solution-box h4 {
+            color: var(--accent-green);
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        /* Pro-Tips & Common Mistakes */
+        .pro-tip, .mistake-box {
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .pro-tip {
+            border-left: 5px solid var(--electric-cyan);
+            background: rgba(0, 188, 212, 0.1);
+        }
+        .pro-tip h4, .pro-tip h3 { color: var(--electric-cyan); }
+        .pro-tip .warning-text {
+            color: var(--highlight-yellow);
+            font-weight: 500;
+        }
+        
+        .mistake-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .mistake-box {
+             border: 2px solid;
+        }
+        .mistake-box.wrong {
+            border-color: var(--warning-red);
+            background: rgba(219, 68, 55, 0.1);
+        }
+        .mistake-box.right {
+            border-color: var(--accent-green);
+            background: rgba(15, 157, 88, 0.1);
+        }
+        .mistake-box h4 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.4rem;
+        }
+        .mistake-box.wrong h4 { color: var(--warning-red); }
+        .mistake-box.right h4 { color: var(--accent-green); }
+        .mistake-box code {
+            font-size: 1.1rem;
+            background-color: rgba(0,0,0,0.3);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        /* Practice Zone */
+        .practice-problem {
+            padding: 20px;
+            border: 1px solid var(--deep-purple);
+            border-radius: 10px;
+            background: rgba(103, 58, 183, 0.1);
+            margin-bottom: 30px;
+        }
+        .practice-problem h3 { color: var(--neon-pink); }
+        .practice-problem.challenge h3 { color: var(--warning-red); }
+        .practice-problem.challenge {
+            border-color: var(--warning-red);
+            background: rgba(219, 68, 55, 0.1);
+        }
+        
+        .hint-box {
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(244, 180, 0, 0.1);
+            border-left: 4px solid var(--highlight-yellow);
+            border-radius: 5px;
+            font-style: italic;
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* Buttons */
+        .btn {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 12px 25px;
+            border-radius: 50px;
+            border: 2px solid;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: transparent;
+            margin: 5px;
+        }
+
+        .btn-primary { border-color: var(--primary-blue); color: var(--primary-blue); }
+        .btn-primary:hover { background: var(--primary-blue); color: #fff; box-shadow: 0 0 15px var(--primary-blue); }
+
+        .btn-secondary { border-color: var(--highlight-yellow); color: var(--highlight-yellow); }
+        .btn-secondary:hover { background: var(--highlight-yellow); color: #000; box-shadow: 0 0 15px var(--highlight-yellow); }
+        
+        .btn-tertiary { border-color: var(--accent-green); color: var(--accent-green); }
+        .btn-tertiary:hover { background: var(--accent-green); color: #fff; box-shadow: 0 0 15px var(--accent-green); }
+
+        /* QUIZ STYLES */
+        #quiz-container {
+            background: #121221;
+            padding: 30px;
+            border-radius: 15px;
+        }
+        #options-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        #question-container { margin-bottom: 20px; }
+        #question-text {
+            font-size: 1.4rem;
+            font-weight: 500;
+            margin-bottom: 25px;
+        }
+        .option-btn {
+            width: 100%;
+            text-align: center;
+            padding: 20px;
+            font-size: 1.2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .option-btn:hover:not(:disabled) {
+            border-color: var(--electric-cyan);
+            background: rgba(0, 188, 212, 0.2);
+            transform: translateY(-2px);
+        }
+        .option-btn.correct {
+            background: var(--accent-green) !important;
+            border-color: var(--accent-green) !important;
+            color: #fff !important;
+        }
+        .option-btn.incorrect {
+            background: var(--warning-red) !important;
+            border-color: var(--warning-red) !important;
+            color: #fff !important;
+        }
+        .option-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+        
+        #quiz-feedback { margin-top: 20px; }
+        #explanation-text {
+            padding: 15px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            font-size: 1rem;
+        }
+
+        #quiz-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        #quiz-results { text-align: center; }
+        #quiz-results h3 { font-size: 2rem; color: var(--electric-cyan); }
+        #score-text { font-size: 1.5rem; margin: 20px 0; }
+        #result-message { font-size: 1.2rem; }
+        
+        /* MODAL for Answer Review */
+        .modal {
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s;
+        }
+        .modal-content {
+            background-color: var(--card-bg);
+            margin: auto;
+            padding: 30px;
+            border: 1px solid var(--primary-blue);
+            box-shadow: 0 0 25px var(--primary-blue);
+            width: 90%;
+            max-width: 800px;
+            border-radius: 15px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .modal-close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .modal-close:hover,
+        .modal-close:focus {
+            color: var(--warning-red);
+            text-decoration: none;
+            cursor: pointer;
+        }
+        #review-container li {
+            list-style: none;
+            padding: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        #review-container li strong { color: var(--electric-cyan); }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 50px;
+            background-color: #000;
+            border-top: 2px solid var(--deep-purple);
+            box-shadow: 0 0 20px var(--deep-purple);
+        }
+        footer p {
+            margin: 0;
+            color: #aaa;
+        }
+
+        /* ANIMATIONS */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes sparkle {
+            0%, 100% { transform: scale(1); text-shadow: 0 0 2px; }
+            50% { transform: scale(1.2); text-shadow: 0 0 10px; }
+        }
+
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 768px) {
+            body {
+                font-size: 14px;
+            }
+            .container {
+                padding: 0 15px;
+            }
+            section {
+                padding: 25px;
+            }
+            .section-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            .mistake-grid, #options-container {
+                grid-template-columns: 1fr;
+            }
+            .step {
+                flex-direction: column;
+                text-align: center;
+            }
+            #quiz-navigation {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .modal-content {
+                width: 95%;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="protection-overlay">
+        <p>🔒 Content copying and screenshots are disabled.</p>
+    </div>
+
+    <header>
+        <canvas id="particle-canvas"></canvas>
+        <div class="header-content">
+            <h1>Introduction to Ratios</h1>
+            <div class="subtitle-box">
+                Comparing Quantities in Nigerian Life
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- SECTION 1: THE HOOK + PROBLEM SITUATION -->
+        <section id="introduction">
+            <div class="section-header">
+                <div class="icon"><i class="fas fa-balance-scale-right"></i></div>
+                <h2>1. The Hook: The Unfair Sharing?</h2>
+            </div>
+            <p>
+                What if sharing wasn't always about being equal? Sometimes, things are shared based on a rule or a relationship. This is the secret power of ratios! <span class="emoji-icon">🤔</span>
+            </p>
+            
+            <div class="pro-tip" style="border-color: var(--highlight-yellow); background: rgba(244, 180, 0, 0.1);">
+                <h3 class="neon-text-yellow" style="margin-bottom:10px;">Problem Situation: The Gari and Groundnut Deal</h3>
+                <p>
+                    Ada and Kunle are sharing a bowl of soaked Gari with roasted groundnuts. They didn't contribute equal amounts of money, so they agree on a rule for sharing the groundnuts: 
+                    <br> "<strong class="keyword">For every 2 spoons of groundnuts Ada takes, Kunle will take 3 spoons.</strong>"
+                </p>
+                <p>
+                    <strong class="keyword">Your challenge:</strong> This isn't equal, but it is fair based on their agreement. How can we write this relationship down using maths? If they did this 4 times, how many spoons would each person have in total?
+                </p>
+            </div>
+
+            <p style="margin-top: 20px;">
+                This special relationship, "2 for Ada to 3 for Kunle", is what we call a <strong class="neon-text-pink">ratio</strong>. It's written as <span class="ratio">2:3</span>. It’s a way of comparing two quantities. By the end of this lesson, you'll understand exactly how to use ratios to solve problems like this and many more! <span class="emoji-icon">🚀</span>
+            </p>
+        </section>
+
+        <!-- SECTION 2: REAL-WORLD RELEVANCE -->
+        <section id="daily-life">
+            <div class="section-header">
+                <div class="icon"><i class="fas fa-globe-africa"></i></div>
+                <h2>2. Ratios Are All Around You!</h2>
+            </div>
+            <p>Ratios are used everywhere to compare things. Here are 5 real-life examples from Nigeria: <span class="emoji-icon">👇</span></p>
+
+            <details>
+                <summary>Cooking and Recipes</summary>
+                <div>
+                    <p>When making Zobo drink, a good recipe might ask for a <strong class="keyword">ratio</strong> of <strong class="ratio">1:4</strong> for hibiscus leaves to water (1 cup of leaves for every 4 cups of water). Getting this ratio right ensures your Zobo isn't too strong or too weak. <span class="emoji-icon">🥤</span></p>
+                </div>
+            </details>
+
+            <details>
+                <summary>Classroom Composition</summary>
+                <div>
+                    <p>If there are <strong class="highlight-num">15</strong> boys and <strong class="highlight-num">20</strong> girls in your class, the <strong class="keyword">ratio</strong> of boys to girls is <span class="ratio">15:20</span>. This can be simplified (just like a fraction!) to <span class="ratio">3:4</span>. For every 3 boys, there are 4 girls. <span class="emoji-icon">🧑‍🤝‍🧑</span></p>
+                </div>
+            </details>
+            
+            <details>
+                <summary>Building and Mixing Cement</summary>
+                <div>
+                    <p>Builders mix cement, sand, and gravel in a specific ratio to make strong concrete. For example, they might use a ratio of <span class="ratio">1:2:4</span> (1 part cement, 2 parts sand, 4 parts gravel). The wrong ratio can make a building weak! <span class="emoji-icon">🏗️</span></p>
+                </div>
+            </details>
+            
+            <details>
+                <summary>Maps and Models</summary>
+                <div>
+                    <p>The scale on a map is a ratio. A scale of <span class="ratio">1:100,000</span> means that 1 cm on the map represents 100,000 cm (or 1 km) in real life. It helps you understand real distances. <span class="emoji-icon">🗺️</span></p>
+                </div>
+            </details>
+            
+            <details>
+                <summary>Football Team Performance</summary>
+                <div>
+                    <p>If the Super Eagles play 10 matches and their win-loss ratio is <span class="ratio">7:3</span>, it means they won 7 matches and lost 3. It's a quick way to see how well they are performing. <span class="emoji-icon">⚽</span></p>
+                </div>
+            </details>
+        </section>
+
+        <!-- SECTION 3: KEY TERMS -->
+        <section id="key-terms">
+            <div class="section-header">
+                <div class="icon"><i class="fas fa-book-open"></i></div>
+                <h2>3. The Language of Ratios</h2>
+            </div>
+            <p>To be a ratio expert, you must know these key terms. <span class="emoji-icon">📚</span></p>
+            
+            <div class="term-card">
+                <i class="fas fa-exchange-alt icon"></i>
+                <div>
+                    <h3>Ratio</h3>
+                    <p>A way of comparing the size of <strong class="neon-text-yellow">two or more quantities</strong>. A ratio is written with a colon (:) between the numbers, for example, <span class="ratio">3:5</span>.</p>
+                </div>
+            </div>
+
+            <div class="term-card">
+                <i class="fas fa-list-ol icon"></i>
+                <div>
+                    <h3>Terms of a Ratio</h3>
+                    <p>The <strong class="neon-text-yellow">numbers</strong> used in a ratio. In the ratio <span class="ratio">3:5</span>, the terms are <strong class="highlight-num">3</strong> and <strong class="highlight-num">5</strong>. The order of the terms is very important!</p>
+                </div>
+            </div>
+            
+            <div class="term-card">
+                <i class="fas fa-shapes icon"></i>
+                <div>
+                    <h3>Simplest Form</h3>
+                    <p>A ratio is in its simplest form when the terms have <strong class="neon-text-yellow">no common factors</strong> other than 1. For example, the ratio <span class="ratio">6:9</span> can be simplified to <span class="ratio">2:3</span> by dividing both terms by 3.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: STEP-BY-STEP -->
+        <section id="step-by-step">
+            <div class="section-header">
+                <div class="icon"><i class="fas fa-pen-ruler"></i></div>
+                <h2>4. How to Write and Simplify a Ratio</h2>
+            </div>
+            <p>Let's use a simple example: In a fruit basket, there are <strong class="highlight-num">8</strong> oranges 🍊 and <strong class="highlight-num">12</strong> mangoes 🥭. Let's write and simplify the ratio of oranges to mangoes.</p>
+
+            <div class="step">
+                <div class="step-number">1</div>
+                <div>
+                    <h3>Identify the Quantities and Order <span class="emoji-icon">🧐</span></h3>
+                    <p>We are asked for the ratio of <strong class="neon-text-blue">oranges to mangoes</strong>. This means the number of oranges must come first.</p>
+                    <p>Oranges = <strong class="highlight-num">8</strong><br>Mangoes = <strong class="highlight-num">12</strong></p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">2</div>
+                <div>
+                    <h3>Write the Ratio with a Colon <span class="emoji-icon">✍️</span></h3>
+                    <p>Place the numbers in the correct order with a colon in between.</p>
+                    <p>The ratio is <span class="ratio">8 : 12</span></p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">3</div>
+                <div>
+                    <h3>Simplify the Ratio <span class="emoji-icon">✨</span></h3>
+                    <p>Find the largest number that can divide both <strong class="highlight-num">8</strong> and <strong class="highlight-num">12</strong>. This is the Highest Common Factor (HCF). The HCF of 8 and 12 is <strong class="highlight-num">4</strong>.</p>
+                    <p>Now, divide both terms by the HCF:</p>
+                    <p><strong class="highlight-num">8</strong> &divide; <strong class="highlight-num">4</strong> = <strong class="neon-text-green">2</strong>
+                    <br><strong class="highlight-num">12</strong> &divide; <strong class="highlight-num">4</strong> = <strong class="neon-text-green">3</strong></p>
+                </div>
+            </div>
+
+            <div class="solution-box" style="border-color: var(--neon-pink);">
+                <h4 style="color: var(--neon-pink);">Final Answer! <span class="emoji-icon">🎉</span></h4>
+                <p>The simplified ratio of oranges to mangoes is:</p>
+                <p style="font-size: 2.5rem; text-align: center; font-weight: 700;" class="neon-text-cyan">
+                    2 : 3
+                </p>
+                <p style="text-align: center; margin-top: 1rem;">This means for every <strong class="highlight-num">2</strong> oranges in the basket, there are <strong class="highlight-num">3</strong> mangoes.</p>
+            </div>
+        </section>
+
+        <!-- SECTION 5: REAL-LIFE APPLICATION -->
+        <section id="real-life-app">
+            <div class="section-header">
+                <div class="icon"><i class="fas-solid fa-users"></i></div>
+                <h2>5. Planning a School Football Team</h2>
+            </div>
+            <p>
+                Mr. Chukwudi, the games master, is selecting players for the school's junior football team. He has <strong class="highlight-num">12</strong> JSS 1 students and <strong class="highlight-num">18</strong> JSS 2 students who came for the trial. <span class="emoji-icon">⚽</span>
+            </p>
+            <p>What is the ratio of JSS 1 students to JSS 2 students in its simplest form? What does this ratio tell us?</p>
+            <button class="btn btn-primary" onclick="toggleSolution('football-solution')">Show Solution</button>
+            <div id="football-solution" class="solution-box hidden">
+                <h4>Step-by-Step Solution</h4>
+                <p><strong>1. Identify the quantities and order:</strong> We need the ratio of <strong class="keyword">JSS 1 students to JSS 2 students</strong>.</p>
+                <ul>
+                    <li>JSS 1 students = <strong class="highlight-num">12</strong></li>
+                    <li>JSS 2 students = <strong class="highlight-num">18</strong></li>
+                </ul>
+                <p><strong>2. Write the initial ratio:</strong> The ratio is <span class="ratio">12 : 18</span>.</p>
+                <p><strong>3. Simplify the ratio:</strong> We need to find the Highest Common Factor (HCF) of 12 and 18.
+                <br>Factors of 12 are: 1, 2, 3, 4, 6, 12.
+                <br>Factors of 18 are: 1, 2, 3, 6, 9, 18.
+                <br>The HCF is <strong class="highlight-num">6</strong>.
+                </p>
+                <p><strong>4. Divide both terms by the HCF (6):</strong>
+                <br><strong class="highlight-num">12</strong> &divide; <strong class="highlight-num">6</strong> = <strong class="neon-text-green">2</strong>
+                <br><strong class="highlight-num">18</strong> &divide; <strong class="highlight-num">6</strong> = <strong class="neon-text-green">3</strong>
+                </p>
+                <h4 style="color: var(--neon-pink); margin-top: 15px;">Final Answer and Meaning! <span class="emoji-icon">✅</span></h4>
+                <p>The simplified ratio is <strong class="ratio neon-text-cyan">2 : 3</strong>.</p>
+                <p>This means that for every <strong class="neon-text-cyan">2</strong> JSS 1 students who came for the trial, there were <strong class="neon-text-cyan">3</strong> JSS 2 students.</p>
+            </div>
+        </section>
+
+        <!-- SECTION 6: APPLIED PROBLEM -->
+        <section id="financial-lit">
+            <div class="section-header">
+                <div class="icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                <h2>6. Sharing a Business Profit</h2>
+            </div>
+            <p>
+                Two friends, Bolu and Fatima, start a small business selling handmade beads. Bolu invested <span class="currency">₦4,000</span> and Fatima invested <span class="currency">₦6,000</span>. They agree to share their first profit of <span class="currency">₦5,000</span> in the <strong class="keyword">same ratio as their investment</strong>. <span class="emoji-icon">💰</span>
+            </p>
+            <p>
+                <strong>Question:</strong> How much of the profit does each person get?
+            </p>
+            <button class="btn btn-primary" onclick="toggleSolution('profit-solution')">Show Solution</button>
+            <div id="profit-solution" class="solution-box hidden">
+                <h4>Step-by-Step Solution</h4>
+                <p><strong>1. Find the Ratio of their Investment:</strong>
+                <br>Bolu's investment : Fatima's investment
+                <br><span class="ratio">4,000 : 6,000</span>
+                <br>To simplify, we can divide both by 1,000: <span class="ratio">4 : 6</span>.
+                <br>Now, simplify <span class="ratio">4 : 6</span> by dividing by 2: <strong class="neon-text-green">2 : 3</strong>.
+                So, they will share the profit in the ratio <span class="ratio">2:3</span>.
+                </p>
+                <p><strong>2. Find the Total Number of Parts:</strong>
+                <br>Add the terms of the ratio: <strong class="highlight-num">2</strong> + <strong class="highlight-num">3</strong> = <strong class="highlight-num">5</strong> total parts.
+                </p>
+                <p><strong>3. Calculate the Value of One Part:</strong>
+                <br>Divide the total profit by the total number of parts.
+                <br><span class="currency">₦5,000</span> &divide; <strong class="highlight-num">5</strong> = <strong class="neon-text-green">₦1,000</strong> per part.
+                </p>
+                <p><strong>4. Calculate Each Person's Share:</strong>
+                <br><strong>Bolu's share</strong> (2 parts): <strong class="highlight-num">2</strong> &times; <span class="currency">₦1,000</span> = <strong class="neon-text-green">₦2,000</strong>.
+                <br><strong>Fatima's share</strong> (3 parts): <strong class="highlight-num">3</strong> &times; <span class="currency">₦1,000</span> = <strong class="neon-text-green">₦3,000</strong>.
+                </p>
+                <h4 style="color: var(--neon-pink); margin-top: 15px;">Final Answer! <span class="emoji-icon">💡</span></h4>
+                <p>Bolu gets <strong class="neon-text-cyan">₦2,000</strong> of the profit, and Fatima gets <strong class="neon-text-cyan">₦3,000</strong>. (Check: 2000 + 3000 = 5000, which is the total profit!)</p>
+            </div>
+        </section>
+
+        <!-- SECTION 7: PRO-TIPS & TRICKS -->
+        <section id="math-tricks">
+            <div class="section-header">
+                <div class="icon"><i class="fas fa-wand-magic-sparkles"></i></div>
+                <h2>7. Maths Magic: The 'Total Parts' Method</h2>
+            </div>
+            <p>Sharing a quantity in a given ratio can be easy if you use this powerful method! <span class="emoji-icon">✨</span></p>
+            <div class="pro-tip">
+                <h4>The 3 Steps to Fair Sharing</h4>
+                <p>To share an amount (like ₦200) in a ratio (like <span class="ratio">1:3</span>), follow these steps:</p>
+                <ol>
+                    <li><strong class="keyword">ADD:</strong> Add the terms of the ratio to find the "total parts".
+                    <br><strong class="highlight-num">1</strong> + <strong class="highlight-num">3</strong> = <strong class="highlight-num">4</strong> parts.</li>
+                    <li><strong class="keyword">DIVIDE:</strong> Divide the total amount by the total parts to find the value of one part.
+                    <br><span class="currency">₦200</span> &divide; <strong class="highlight-num">4</strong> = <span class="currency">₦50</span> per part.</li>
+                    <li><strong class="keyword">MULTIPLY:</strong> Multiply the value of one part by each term in the original ratio.
+                    <br>Person 1 gets <strong class="highlight-num">1</strong> &times; <span class="currency">₦50</span> = <span class="neon-text-green">₦50</span>.
+                    <br>Person 2 gets <strong class="highlight-num">3</strong> &times; <span class="currency">₦50</span> = <span class="neon-text-green">₦150</span>.</li>
+                </ol>
+                <hr style="margin: 15px 0; border-color: rgba(255,255,255,0.2);">
+                <p><i class="fas fa-exclamation-triangle"></i> <strong class="warning-text">Be Careful!</strong> A common mistake is to just divide the total amount by the numbers in the ratio (e.g., dividing ₦200 by 1 and then by 3). This is wrong! You MUST find the total parts first.</p>
+            </div>
+        </section>
+
+        <!-- SECTION 8: COMMON MISTAKES -->
+        <section id="common-mistakes">
+            <div class="section-header">
+                <div class="icon"><i class="fas fa-triangle-exclamation"></i></div>
+                <h2>8. Watch Out! Common Mistakes</h2>
+            </div>
+            <p>Ratios can be confusing at first. Let's avoid these two common mistakes. <span class="emoji-icon">🧐</span></p>
+
+            <div class="mistake-grid">
+                <div class="mistake-box wrong">
+                    <h4><i class="fas fa-times-circle"></i> Wrong Way</h4>
+                    <p><strong>Mistake: Mixing up the Order.</strong></p>
+                    <p>If the ratio of <strong class="keyword">boys to girls</strong> is <span class="ratio">2:3</span>, saying the ratio of <strong class="keyword">girls to boys</strong> is also <span class="ratio">2:3</span> is a big mistake!</p>
+                </div>
+                <div class="mistake-box right">
+                    <h4><i class="fas fa-check-circle"></i> Right Way</h4>
+                    <p><strong>Remember: Order Matters!</strong></p>
+                    <p>The order in the words must match the order in the numbers. The ratio of <strong class="keyword">girls to boys</strong> would be <span class="ratio">3:2</span>.</p>
+                </div>
+                <div class="mistake-box wrong">
+                    <h4><i class="fas fa-times-circle"></i> Wrong Way</h4>
+                    <p><strong>Mistake: Confusing Ratio with Fraction of Total.</strong></p>
+                    <p>In a ratio of <strong class="keyword">blue balls to red balls</strong> of <span class="ratio">2:3</span>, a student might think the fraction of blue balls is 2/3. This is wrong!</p>
+                </div>
+                <div class="mistake-box right">
+                    <h4><i class="fas fa-check-circle"></i> Right Way</h4>
+                    <p><strong>Remember: Find the Total for the Fraction.</strong></p>
+                    <p>The total number of parts is <strong class="highlight-num">2 + 3 = 5</strong>.
+                    <br>So, the fraction of blue balls is <strong class="highlight-num">2/5</strong>.
+                    <br>The fraction of red balls is <strong class="highlight-num">3/5</strong>.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 9: PRACTICE ZONE -->
+        <section id="practice">
+            <div class="section-header">
+                <div class="icon"><i class="fas fa-pencil-alt"></i></div>
+                <h2>9. Practice & Challenge Zone</h2>
+            </div>
+
+            <div class="practice-problem">
+                <h3><i class="fas fa-star"></i> Standard Practice</h3>
+                <p>A bag contains <strong class="highlight-num">20</strong> blue pens and <strong class="highlight-num">25</strong> black pens. What is the ratio of blue pens to black pens in its simplest form?</p>
+                <button class="btn btn-secondary" onclick="toggleSolution('practice-hint')">Show Hint</button>
+                <button class="btn btn-tertiary" onclick="toggleSolution('practice-solution')">Show Solution</button>
+                <div id="practice-hint" class="hint-box hidden">
+                    <p>Write the ratio as <span class="ratio">20:25</span>. Then find the largest number that can divide both 20 and 25.</p>
+                </div>
+                <div id="practice-solution" class="solution-box hidden">
+                    <h4>Solution</h4>
+                    <p>1. <strong>Write the ratio:</strong> The ratio of blue to black is <span class="ratio">20 : 25</span>.</p>
+                    <p>2. <strong>Find the HCF:</strong> The Highest Common Factor of 20 and 25 is <strong class="highlight-num">5</strong>.</p>
+                    <p>3. <strong>Simplify:</strong> Divide both terms by 5.
+                    <br><strong class="highlight-num">20</strong> &divide; <strong class="highlight-num">5</strong> = <strong class="neon-text-green">4</strong>.
+                    <br><strong class="highlight-num">25</strong> &divide; <strong class="highlight-num">5</strong> = <strong class="neon-text-green">5</strong>.</p>
+                    <p><strong>Final Answer:</strong> The simplified ratio is <span class="ratio neon-text-cyan">4 : 5</span>.</p>
+                </div>
+            </div>
+
+            <div class="practice-problem challenge">
+                <h3><i class="fas fa-gem"></i> Challenge Problem</h3>
+                <p>Two brothers, David and Samuel, are to share <strong class="highlight-num">35</strong> mangoes in the ratio of their ages. David is 12 years old and Samuel is 8 years old. How many mangoes does each brother get?</p>
+                <button class="btn btn-secondary" onclick="toggleSolution('challenge-hint')">Show Hint</button>
+                <button class="btn btn-tertiary" onclick="toggleSolution('challenge-solution')">Show Solution</button>
+                <div id="challenge-hint" class="hint-box hidden">
+                    <p>First, find the ratio of their ages (12:8) and simplify it. Then use the "Total Parts" method to share the 35 mangoes.</p>
+                </div>
+                <div id="challenge-solution" class="solution-box hidden">
+                    <h4>Solution</h4>
+                    <p><strong>1. Find and Simplify the Ratio of Ages:</strong>
+                    <br>David's age : Samuel's age = <span class="ratio">12 : 8</span>.
+                    <br>The HCF of 12 and 8 is <strong class="highlight-num">4</strong>.
+                    <br>Simplified ratio = (<strong class="highlight-num">12</strong>&divide;4) : (<strong class="highlight-num">8</strong>&divide;4) = <strong class="neon-text-green">3 : 2</strong>.</p>
+                    
+                    <p><strong>2. Find the Total Parts:</strong>
+                    <br>Total parts = <strong class="highlight-num">3</strong> + <strong class="highlight-num">2</strong> = <strong class="highlight-num">5</strong> parts.</p>
+                    
+                    <p><strong>3. Find the Value of One Part:</strong>
+                    <br>Value of 1 part = Total mangoes &divide; Total parts = <strong class="highlight-num">35</strong> &divide; <strong class="highlight-num">5</strong> = <strong class="neon-text-green">7 mangoes</strong>.</p>
+                    
+                    <p><strong>4. Calculate Each Brother's Share:</strong>
+                    <br><strong>David's share</strong> (3 parts): <strong class="highlight-num">3</strong> &times; 7 = <strong class="neon-text-green">21 mangoes</strong>.
+                    <br><strong>Samuel's share</strong> (2 parts): <strong class="highlight-num">2</strong> &times; 7 = <strong class="neon-text-green">14 mangoes</strong>.</p>
+                    
+                    <p><strong>Final Answer:</strong> David gets <strong class="neon-text-cyan">21 mangoes</strong> and Samuel gets <strong class="neon-text-cyan">14 mangoes</strong>.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 10: SUMMARY -->
+        <section id="summary">
+            <div class="section-header">
+                <div class="icon"><i class="fas fa-list-check"></i></div>
+                <h2>10. Summary: The Golden Rules of Ratios</h2>
+            </div>
+            <p>Remember these golden rules to become a ratio master:</p>
+            <ol style="list-style-type: none; padding-left: 0;">
+                <li style="display: flex; align-items: center; margin-bottom: 1rem;">
+                    <span style="font-size: 2rem; font-weight: 900; color: var(--accent-green); margin-right: 15px;">1.</span>
+                    <div>A ratio <strong class="keyword">compares two or more quantities</strong>. The order is very important!</div>
+                </li>
+                <li style="display: flex; align-items: center; margin-bottom: 1rem;">
+                    <span style="font-size: 2rem; font-weight: 900; color: var(--accent-green); margin-right: 15px;">2.</span>
+                    <div>To simplify a ratio, divide all terms by their <strong class="keyword">Highest Common Factor (HCF)</strong>.</div>
+                </li>
+                <li style="display: flex; align-items: center; margin-bottom: 1rem;">
+                    <span style="font-size: 2rem; font-weight: 900; color: var(--accent-green); margin-right: 15px;">3.</span>
+                    <div>To share an amount in a given ratio, use the <strong class="keyword">"Add, Divide, Multiply"</strong> method (The Total Parts Method).</div>
+                </li>
+                 <li style="display: flex; align-items: center; margin-bottom: 1rem;">
+                    <span style="font-size: 2rem; font-weight: 900; color: var(--accent-green); margin-right: 15px;">4.</span>
+                    <div>A ratio like <span class="ratio">2:3</span> is different from a fraction. The fraction of the first part is <strong class="highlight-num">2/5</strong> (2 over the total parts).</div>
+                </li>
+            </ol>
+        </section>
+
+        <!-- SECTION 11: QUIZ -->
+        <section id="quiz-section">
+            <div class="section-header">
+                <div class="icon"><i class="fas fa-question-circle"></i></div>
+                <h2>11. Test Your Ratio Skills!</h2>
+            </div>
+            <p>Time to show what you know! <span class="emoji-icon">🧠</span> Click start for 5 random questions about ratios.</p>
+            
+            <div id="quiz-intro">
+                <button class="btn btn-primary btn-lg" id="start-quiz-btn">Start Quiz</button>
+            </div>
+            
+            <div id="quiz-container" class="hidden">
+                <div id="question-container">
+                    <p id="question-progress"></p>
+                    <p id="question-text"></p>
+                    <div id="options-container">
+                        <!-- Options will be generated by JS -->
+                    </div>
+                </div>
+
+                <div id="quiz-feedback" class="hidden">
+                    <div id="explanation-text"></div>
+                </div>
+                
+                <div id="quiz-navigation">
+                    <div>
+                        <button class="btn btn-secondary hidden" id="preview-answers-btn">Preview Answers</button>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary" id="next-question-btn">Next <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="quiz-results" class="hidden">
+                <h3>Quiz Complete!</h3>
+                <p id="score-text">Your Score: 0 / 5</p>
+                <p id="result-message">Let's see how you did!</p>
+                <button class="btn btn-primary" id="reset-quiz-btn">Try Again</button>
+                <button class="btn btn-secondary" id="final-preview-btn">Review Your Answers</button>
+            </div>
+        </section>
+
+    </main>
+    
+    <!-- Answer Review Modal -->
+    <div id="answer-modal" class="modal hidden">
+      <div class="modal-content">
+        <span class="modal-close" onclick="document.getElementById('answer-modal').classList.add('hidden')">&times;</span>
+        <h2>Your Answers Review</h2>
+        <ul id="review-container"></ul>
+      </div>
+    </div>
+
+
+    <footer>
+        <div class="container">
+            <p>© 2025 Magaby Mathematics. Making Maths Fun! ✨</p>
+            <p>All rights reserved. Designed for an engaging learning experience.</p>
+        </div>
+    </footer>
+
+
+    <script>
+        // --- CONTENT PROTECTION SCRIPT ---
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.addEventListener('keydown', function(event) {
+            const forbiddenKeys = ['F12', 'c', 'u', 's', 'p'];
+            const isCtrl = event.ctrlKey || event.metaKey;
+
+            if (event.key === 'PrintScreen' || (isCtrl && forbiddenKeys.includes(event.key.toLowerCase()))) {
+                event.preventDefault();
+                flashProtectionOverlay();
+            }
+        }, false);
+
+        function flashProtectionOverlay() {
+            const overlay = document.getElementById('protection-overlay');
+            overlay.classList.add('flash');
+            setTimeout(() => {
+                overlay.classList.remove('flash');
+            }, 1500);
+        }
+
+        // --- INTERACTIVITY SCRIPT ---
+        function toggleSolution(id) {
+            document.getElementById(id).classList.toggle('hidden');
+        }
+        
+        // --- HEADER PARTICLE ANIMATION ---
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = canvas.parentElement.offsetHeight;
+        
+        let particlesArray;
+        const headerColors = ['--primary-blue', '--accent-green', '--warning-red', '--highlight-yellow', '--deep-purple', '--neon-pink', '--electric-cyan'];
+        const randomColorVar = headerColors[Math.floor(Math.random() * headerColors.length)];
+        const glowColor = getComputedStyle(document.documentElement).getPropertyValue(randomColorVar).trim();
+        document.querySelector('header h1').style.setProperty('--header-glow-color', glowColor);
+
+        class Particle {
+            constructor(x, y, dirX, dirY, size, color) { this.x = x; this.y = y; this.directionX = dirX; this.directionY = dirY; this.size = size; this.color = color; }
+            draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false); ctx.fillStyle = this.color; ctx.fill(); }
+            update() {
+                if (this.x > canvas.width || this.x < 0) { this.directionX = -this.directionX; }
+                if (this.y > canvas.height || this.y < 0) { this.directionY = -this.directionY; }
+                this.x += this.directionX; this.y += this.directionY; this.draw();
+            }
+        }
+
+        function initParticles() {
+            particlesArray = [];
+            let num = (canvas.height * canvas.width) / 9000;
+            for (let i = 0; i < num; i++) {
+                let size = (Math.random() * 3) + 1;
+                let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
+                let y = (Math.random() * ((canvas.parentElement.offsetHeight - size * 2) - (size * 2)) + size * 2);
+                let dirX = (Math.random() * .4) - .2; let dirY = (Math.random() * .4) - .2;
+                particlesArray.push(new Particle(x, y, dirX, dirY, size, `rgba(255, 255, 255, ${Math.random()})`));
+            }
+        }
+
+        function animateParticles() {
+            requestAnimationFrame(animateParticles); ctx.clearRect(0,0,innerWidth, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) { particlesArray[i].update(); }
+        }
+        
+        initParticles(); animateParticles();
+        window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = canvas.parentElement.offsetHeight; initParticles(); });
+
+
+        // --- QUIZ SCRIPT ---
+        const startQuizBtn = document.getElementById('start-quiz-btn');
+        const quizIntro = document.getElementById('quiz-intro');
+        const quizContainer = document.getElementById('quiz-container');
+        const quizResults = document.getElementById('quiz-results');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const nextQuestionBtn = document.getElementById('next-question-btn');
+        const resetQuizBtn = document.getElementById('reset-quiz-btn');
+        const questionProgress = document.getElementById('question-progress');
+        const scoreText = document.getElementById('score-text');
+        const resultMessage = document.getElementById('result-message');
+        const quizFeedback = document.getElementById('quiz-feedback');
+        const explanationText = document.getElementById('explanation-text');
+        const previewAnswersBtn = document.getElementById('preview-answers-btn');
+        const finalPreviewBtn = document.getElementById('final-preview-btn');
+        const answerModal = document.getElementById('answer-modal');
+        const reviewContainer = document.getElementById('review-container');
+        
+        // Representative sample from a larger question bank
+        const quizData = [
+            { question: "A ratio is a way of comparing what?", options: ["One quantity", "Two or more quantities", "Only fractions", "Only percentages"], correctAnswer: 1, explanation: `1. A ratio is fundamentally a comparison.<br>2. It compares the size of two or more quantities against each other.<br>3. For example, comparing the number of boys to girls.` },
+            { question: "Simplify the ratio 10:15.", options: ["2:3", "5:3", "1:1.5", "10:15"], correctAnswer: 0, explanation: `1. We need to find the Highest Common Factor (HCF) of 10 and 15.<br>2. The HCF is 5.<br>3. Divide both terms by 5: <br>   10 &divide; 5 = 2<br>   15 &divide; 5 = 3<br>4. The simplified ratio is <strong>2:3</strong>.` },
+            { question: "If the ratio of cats to dogs is 5:2, what is the ratio of dogs to cats?", options: ["5:2", "2:5", "5:7", "2:7"], correctAnswer: 1, explanation: `1. The order of a ratio is very important.<br>2. The original ratio is cats:dogs = 5:2.<br>3. To find the ratio of dogs to cats, we just reverse the order of the terms.<br>4. The new ratio is <strong>2:5</strong>.` },
+            { question: "Share ₦50 in the ratio 2:3. What are the two shares?", options: ["₦20, ₦30", "₦25, ₦25", "₦10, ₦40", "₦30, ₦20"], correctAnswer: 0, explanation: `1. <strong>Add</strong> the ratio terms: 2 + 3 = 5 total parts.<br>2. <strong>Divide</strong> the total amount by the parts: ₦50 &divide; 5 = ₦10 per part.<br>3. <strong>Multiply</strong> for each share:<br>   First share (2 parts): 2 &times; ₦10 = ₦20<br>   Second share (3 parts): 3 &times; ₦10 = ₦30.<br>4. The shares are <strong>₦20 and ₦30</strong>.` },
+            { question: "In a mix of juice, the ratio of orange to pineapple is 3:4. If there are 12 litres of orange, how much pineapple is there?", options: ["9 litres", "12 litres", "16 litres", "21 litres"], correctAnswer: 2, explanation: `1. The ratio is orange:pineapple = 3:4.<br>2. We know the 'orange' part of the ratio (3 parts) is equal to 12 litres.<br>3. Find the value of one part: 12 litres &divide; 3 parts = 4 litres per part.<br>4. The 'pineapple' part has 4 parts. So, 4 parts &times; 4 litres/part = <strong>16 litres</strong>.` },
+            { question: "Which of these ratios is the same as 3:1?", options: ["1:3", "6:2", "9:4", "30:5"], correctAnswer: 1, explanation: `1. To find an equivalent ratio, you must multiply or divide both terms by the same number.<br>2. Let's check 6:2. If we divide both terms by 2, we get (6&divide;2) : (2&divide;2) = 3:1.<br>3. So, <strong>6:2</strong> is the same as 3:1.` },
+            { question: "A recipe needs 2 cups of sugar for every 5 cups of flour. What is the ratio of flour to sugar?", options: ["2:5", "5:2", "2:7", "5:7"], correctAnswer: 1, explanation: `1. The question asks for the ratio of <strong>flour to sugar</strong>.<br>2. We are given 5 cups of flour and 2 cups of sugar.<br>3. The order must match the words. So the ratio is <strong>5:2</strong>.` },
+            { question: "The ratio of wins to losses for a team is 9:1. If they played 20 games, how many did they win?", options: ["9", "1", "18", "2"], correctAnswer: 2, explanation: `1. The ratio is wins:losses = 9:1.<br>2. Total parts in the ratio = 9 + 1 = 10 parts.<br>3. The 10 parts represent the total of 20 games.<br>4. Value of one part = 20 games &divide; 10 parts = 2 games per part.<br>5. The team won 9 parts: 9 &times; 2 games = <strong>18 wins</strong>.` },
+            { question: "A map scale is 1:50,000. If two towns are 4cm apart on the map, what is the real distance?", options: ["200,000 cm", "50,004 cm", "12,500 cm", "4 cm"], correctAnswer: 0, explanation: `1. The ratio 1:50,000 means 1 unit on the map is 50,000 units in reality.<br>2. We have 4cm on the map.<br>3. The real distance is 4 &times; 50,000 = <strong>200,000 cm</strong> (which is 2km).` },
+            { question: "In a class, the ratio of boys to total students is 2:5. What is the ratio of boys to girls?", options: ["2:3", "3:2", "2:5", "3:5"], correctAnswer: 0, explanation: `1. The ratio of boys to total students is 2:5.<br>2. This means for every 5 students, 2 are boys.<br>3. The number of girls must be the rest: Total parts (5) - Boy parts (2) = 3 girl parts.<br>4. Therefore, the ratio of boys to girls is <strong>2:3</strong>.` }
+        ];
+
+        let currentQuestions = []; let currentQuestionIndex = 0; let score = 0; let userAnswers = [];
+        
+        function shuffleArray(array) { for (let i = array.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [array[i], array[j]] = [array[j], array[i]]; } }
+
+        function startQuiz() {
+            quizIntro.classList.add('hidden'); quizResults.classList.add('hidden'); quizContainer.classList.remove('hidden'); nextQuestionBtn.classList.remove('hidden');
+            shuffleArray(quizData); currentQuestions = quizData.slice(0, 5); currentQuestionIndex = 0; score = 0; userAnswers = [];
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            quizFeedback.classList.add('hidden');
+            const question = currentQuestions[currentQuestionIndex];
+            questionProgress.textContent = `Question ${currentQuestionIndex + 1} of ${currentQuestions.length}`;
+            questionText.innerHTML = question.question.replace(/₦([\d,]+)/g, '<span class="currency">₦$1</span>');
+            
+            optionsContainer.innerHTML = '';
+            question.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.innerHTML = typeof option === 'string' ? option.replace(/₦([\d,]+)/g, '<span class="currency">₦$1</span>') : option;
+                button.classList.add('option-btn');
+                button.dataset.index = index;
+                button.addEventListener('click', selectAnswer);
+                optionsContainer.appendChild(button);
+            });
+            nextQuestionBtn.textContent = 'Next'; nextQuestionBtn.disabled = true; previewAnswersBtn.classList.add('hidden');
+        }
+
+        function selectAnswer(e) {
+            const selectedButton = e.currentTarget;
+            const selectedAnswer = parseInt(selectedButton.dataset.index);
+            const question = currentQuestions[currentQuestionIndex];
+            const correctAnswer = question.correctAnswer;
+            
+            userAnswers.push({ question: question.question, options: question.options, selected: selectedAnswer, correct: correctAnswer });
+            
+            if (selectedAnswer === correctAnswer) { score++; selectedButton.classList.add('correct'); } 
+            else { selectedButton.classList.add('incorrect'); optionsContainer.querySelector(`[data-index='${correctAnswer}']`).classList.add('correct'); }
+
+            Array.from(optionsContainer.children).forEach(button => { button.disabled = true; });
+            
+            explanationText.innerHTML = `<strong class="neon-text-green">Step-by-Step Explanation:</strong><br>${question.explanation}`;
+            quizFeedback.classList.remove('hidden'); nextQuestionBtn.disabled = false; previewAnswersBtn.classList.remove('hidden');
+            if(currentQuestionIndex === currentQuestions.length - 1) { nextQuestionBtn.textContent = 'Finish Quiz'; }
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < currentQuestions.length) { loadQuestion(); } else { showResults(); }
+        }
+
+        function showResults() {
+            quizContainer.classList.add('hidden'); quizResults.classList.remove('hidden');
+            scoreText.textContent = `Your Score: ${score} / ${currentQuestions.length}`;
+            
+            const percentage = (score / currentQuestions.length) * 100;
+            let message = '';
+            if (percentage === 100) { message = 'Perfect Score! 🌟 You are a Ratio Master!'; } 
+            else if (percentage >= 80) { message = 'Excellent work! 👍 Your understanding of ratios is very strong.'; } 
+            else if (percentage >= 60) { message = 'Good job! 😊 Ratios can be tricky, but you are doing great.'; } 
+            else { message = 'That was a good try! 💪 Review the lesson and the "Total Parts" method. You\'ll get it!'; }
+            resultMessage.textContent = message;
+        }
+        
+        function openPreviewModal() {
+            reviewContainer.innerHTML = '';
+            userAnswers.forEach((answer, index) => {
+                const li = document.createElement('li');
+                const isCorrect = answer.selected === answer.correct;
+                const userAnswerHtml = typeof answer.options[answer.selected] === 'string' ? answer.options[answer.selected] : answer.options[answer.selected];
+                const correctAnswerHtml = typeof answer.options[answer.correct] === 'string' ? answer.options[answer.correct] : answer.options[answer.correct];
+
+                li.innerHTML = `
+                    <p><strong>Q${index + 1}:</strong> ${answer.question}</p>
+                    <p>Your answer: <span style="color: ${isCorrect ? 'var(--accent-green)' : 'var(--warning-red)'};">${userAnswerHtml} ${isCorrect ? '✅' : '❌'}</span></p>
+                    ${!isCorrect ? `<p>Correct answer: <span style="color: var(--accent-green);">${correctAnswerHtml}</span></p>` : ''}
+                `;
+                reviewContainer.appendChild(li);
+            });
+            answerModal.classList.remove('hidden');
+        }
+
+        startQuizBtn.addEventListener('click', startQuiz);
+        nextQuestionBtn.addEventListener('click', nextQuestion);
+        resetQuizBtn.addEventListener('click', startQuiz);
+        previewAnswersBtn.addEventListener('click', openPreviewModal);
+        finalPreviewBtn.addEventListener('click', openPreviewModal);
+
+    </script>
+</body>
+</html>
