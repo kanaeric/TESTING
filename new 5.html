@@ -1,0 +1,1908 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magaby Interactive Maths World | JSS 1 Edition</title>
+    <script src="https://kit.fontawesome.com/b1b3693d25.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;900&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* CSS RESET & CORE STYLES */
+        :root {
+            --primary-blue: #4285F4;
+            --accent-green: #0F9D58;
+            --warning-red: #DB4437;
+            --highlight-yellow: #F4B400;
+            --deep-purple: #673AB7;
+            --neon-pink: #FF00FF;
+            --neon-cyan: #00FFFF;
+            --bg-dark: #0d0c1d;
+            --bg-card: #16152a;
+            --text-light: #e0e0e0;
+            --text-heading: #ffffff;
+            --glow-shadow-blue: 0 0 5px var(--primary-blue), 0 0 10px var(--primary-blue), 0 0 20px var(--primary-blue);
+            --glow-shadow-green: 0 0 5px var(--accent-green), 0 0 10px var(--accent-green), 0 0 20px var(--accent-green);
+            --glow-shadow-red: 0 0 5px var(--warning-red), 0 0 10px var(--warning-red), 0 0 20px var(--warning-red);
+            --glow-shadow-yellow: 0 0 5px var(--highlight-yellow), 0 0 10px var(--highlight-yellow), 0 0 20px var(--highlight-yellow);
+            --glow-shadow-purple: 0 0 5px var(--deep-purple), 0 0 10px var(--deep-purple), 0 0 20px var(--deep-purple);
+            --glow-shadow-pink: 0 0 5px var(--neon-pink), 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink);
+            --glow-shadow-cyan: 0 0 5px var(--neon-cyan), 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-cyan);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.7;
+            overflow-x: hidden;
+            -webkit-user-select: none; /* Safari */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* IE10+/Edge */
+            user-select: none; /* Standard */
+        }
+        
+        .no-select {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+
+        h1, h2, h3, h4 {
+            font-family: 'Nunito', sans-serif;
+            color: var(--text-heading);
+            font-weight: 900;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ANIMATIONS */
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); opacity: 1; }
+            50% { transform: translateY(-20px) rotate(180deg); opacity: 0.5; }
+            100% { transform: translateY(0px) rotate(360deg); opacity: 1; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes neon-flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                text-shadow: 
+                    0 0 4px #fff,
+                    0 0 11px var(--neon-cyan),
+                    0 0 19px var(--neon-cyan),
+                    0 0 40px var(--primary-blue),
+                    0 0 80px var(--primary-blue),
+                    0 0 90px var(--primary-blue),
+                    0 0 100px var(--primary-blue),
+                    0 0 150px var(--primary-blue);
+                color: #fff;
+            }
+            20%, 24%, 55% {        
+                text-shadow: none;
+                color: #b0c4de;
+            }
+        }
+
+        @keyframes sparkle {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.7; }
+        }
+        
+        @keyframes confetti-fall {
+            0% { transform: translateY(-100vh) rotateZ(0deg); }
+            100% { transform: translateY(100vh) rotateZ(720deg); }
+        }
+
+
+        /* HEADER STYLING */
+        .main-header {
+            position: relative;
+            padding: 80px 20px;
+            text-align: center;
+            overflow: hidden;
+            border-bottom: 3px solid var(--neon-cyan);
+            box-shadow: 0 4px 30px rgba(0, 255, 255, 0.3);
+        }
+
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            background-color: var(--neon-pink);
+            border-radius: 50%;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .main-header h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            animation: neon-flicker 3s infinite alternate;
+        }
+        
+        .lesson-selector-box {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(22, 21, 42, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            display: inline-block;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+        }
+
+        .lesson-selector-box label {
+            font-size: 1.2rem;
+            margin-right: 15px;
+            color: var(--neon-cyan);
+            font-weight: 600;
+        }
+
+        #lesson-select {
+            padding: 12px 20px;
+            font-size: 1.1rem;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            border: 2px solid var(--primary-blue);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        #lesson-select:hover {
+            box-shadow: var(--glow-shadow-blue);
+            background-color: var(--primary-blue);
+            color: white;
+        }
+        #lesson-select option {
+            background-color: var(--bg-card);
+            color: var(--text-light);
+        }
+
+        /* MAIN CONTENT & SECTIONS */
+        main {
+            padding: 40px 0;
+        }
+
+        main section {
+            margin-bottom: 50px;
+            padding-top: 20px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px 25px;
+            border-radius: 15px 15px 0 0;
+            border-bottom: 3px solid rgba(255, 255, 255, 0.5);
+        }
+        
+        .section-header h2, .section-header .fa-solid {
+            color: white;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+        }
+
+        .section-header .fa-solid {
+            font-size: 2.2rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.2rem;
+        }
+        
+        /* NEW: VIBRANT GRADIENT HEADERS */
+        #introduction .section-header { background-image: linear-gradient(135deg, var(--primary-blue), #2a5bbd); }
+        #daily-life .section-header { background-image: linear-gradient(135deg, var(--accent-green), #0a6b3b); }
+        #key-terms .section-header { background-image: linear-gradient(135deg, var(--highlight-yellow), #b38200); }
+        #step-by-step .section-header { background-image: linear-gradient(135deg, var(--deep-purple), #4527a0); }
+        #real-life-app .section-header { background-image: linear-gradient(135deg, var(--neon-pink), #a300a3); }
+        #financial-lit .section-header { background-image: linear-gradient(135deg, var(--primary-blue), #2a5bbd); }
+        #math-tricks .section-header { background-image: linear-gradient(135deg, var(--neon-cyan), #00a3a3); }
+        #common-mistakes .section-header { background-image: linear-gradient(135deg, var(--warning-red), #9c2f26); }
+        #practice .section-header { background-image: linear-gradient(135deg, var(--accent-green), #0a6b3b); }
+        #summary .section-header { background-image: linear-gradient(135deg, var(--highlight-yellow), #b38200); }
+        #quiz-section .section-header { background-image: linear-gradient(135deg, var(--deep-purple), #4527a0); }
+
+
+        .card {
+            background-color: var(--bg-card);
+            padding: 30px;
+            border-radius: 0 0 15px 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .card p, .card li {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+        
+        .card strong {
+           font-weight: 600;
+           font-size: 1.2em;
+        }
+        
+        .card .math-term {
+            color: var(--highlight-yellow);
+            font-weight: 600;
+            font-size: 1.35em;
+            text-shadow: var(--glow-shadow-yellow);
+        }
+
+        .card .currency {
+            color: var(--accent-green);
+            font-weight: 600;
+            font-size: 1.35em;
+            text-shadow: var(--glow-shadow-green);
+        }
+        
+        .card .important-name {
+            color: var(--neon-pink);
+            font-weight: 600;
+            font-size: 1.35em;
+            text-shadow: var(--glow-shadow-pink);
+        }
+        
+        .final-answer {
+            background: linear-gradient(to right, var(--neon-cyan), var(--accent-green));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-size: 1.6em;
+            font-weight: 900;
+            border: 2px solid var(--accent-green);
+            padding: 8px 12px;
+            border-radius: 8px;
+            display: inline-block;
+            text-shadow: 0 0 10px rgba(15, 157, 88, 0.5);
+        }
+        
+        .hook-problem { border-left: 5px solid var(--primary-blue); padding-left: 20px; margin-top: 20px; }
+        .hook-problem h3 { color: var(--primary-blue); font-size: 1.5rem; }
+
+        /* Collapsible Details */
+        details {
+            background-color: rgba(0,0,0,0.2);
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        summary {
+            padding: 15px 20px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--neon-cyan);
+        }
+        summary::before {
+            content: '▶️';
+            transition: transform 0.3s;
+        }
+        details[open] summary::before {
+            transform: rotate(90deg);
+        }
+        .details-content {
+            padding: 0 20px 20px 45px;
+        }
+
+        /* Key Terms */
+        .term {
+            display: flex;
+            align-items: start;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .term .fa-solid {
+            font-size: 1.8rem;
+            color: var(--highlight-yellow);
+            margin-top: 5px;
+            animation: sparkle 2s infinite;
+        }
+        .term-def h4 {
+            font-size: 1.3rem;
+            color: var(--text-heading);
+            margin-bottom: 5px;
+        }
+
+        /* Step-by-Step */
+        .step {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 20px;
+            align-items: start;
+            margin-bottom: 25px;
+        }
+        .step-number {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--deep-purple);
+            text-shadow: var(--glow-shadow-purple);
+            line-height: 1;
+        }
+        .step-content h4 {
+            font-size: 1.4rem;
+            color: var(--neon-cyan);
+        }
+
+        /* Buttons */
+        .btn {
+            background-image: linear-gradient(135deg, var(--primary-blue), var(--deep-purple));
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            margin-right: 10px;
+        }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px var(--neon-cyan);
+        }
+        .solution-box {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: rgba(0,0,0,0.3);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 10px;
+            animation: fadeIn 0.5s;
+        }
+        
+        /* Pro-Tips & Common Mistakes */
+        .pro-tip, .pitfall {
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .pro-tip { border-left: 5px solid var(--accent-green); background-color: rgba(15, 157, 88, 0.1); }
+        .pitfall { border-left: 5px solid var(--warning-red); background-color: rgba(219, 68, 55, 0.1); }
+        .pro-tip .fa-solid { font-size: 2rem; color: var(--accent-green); }
+        .pitfall .fa-solid { font-size: 2rem; color: var(--warning-red); }
+
+        .mistake-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .wrong-way, .right-way {
+            padding: 15px;
+            border-radius: 10px;
+        }
+        .wrong-way {
+            background-color: rgba(219, 68, 55, 0.15);
+            border: 1px solid var(--warning-red);
+        }
+        .right-way {
+            background-color: rgba(15, 157, 88, 0.15);
+            border: 1px solid var(--accent-green);
+        }
+        .mistake-box h4 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+        .wrong-way h4 { color: var(--warning-red); }
+        .right-way h4 { color: var(--accent-green); }
+        
+        /* Practice Zone */
+        .practice-problem {
+            background-color: var(--bg-dark);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border: 1px dashed var(--deep-purple);
+        }
+        .practice-problem h4 { font-size: 1.4rem; color: var(--neon-cyan); }
+        .hint-box, .solution-box { display: none; }
+
+
+        /* QUIZ SECTION */
+        #quiz-container { text-align: center; }
+        #quiz-start-screen h3 { font-size: 1.8rem; color: var(--neon-cyan); margin-bottom: 20px; }
+        #start-quiz-btn { font-size: 1.3rem; padding: 15px 40px; }
+        #quiz-main-screen { display: none; }
+        #quiz-progress { font-size: 1.2rem; margin-bottom: 20px; color: var(--highlight-yellow); }
+        #question-text { font-size: 1.5rem; margin-bottom: 30px; line-height: 1.5; }
+        
+        .quiz-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .option-btn {
+            width: 100%;
+            padding: 20px;
+            font-size: 1.1rem;
+            background-color: var(--bg-dark);
+            border: 2px solid var(--primary-blue);
+            color: var(--text-light);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+        .option-btn:not(:disabled):hover {
+            background-color: var(--primary-blue);
+            color: white;
+            box-shadow: var(--glow-shadow-blue);
+        }
+        .option-btn.correct { background-color: var(--accent-green); border-color: var(--accent-green); color: white; box-shadow: var(--glow-shadow-green); }
+        .option-btn.incorrect { background-color: var(--warning-red); border-color: var(--warning-red); color: white; box-shadow: var(--glow-shadow-red); }
+        .option-btn:disabled { cursor: not-allowed; opacity: 0.7; }
+
+        #quiz-feedback { margin-top: 20px; display: none; }
+        #explanation-text {
+            background-color: rgba(0,0,0,0.2);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid var(--highlight-yellow);
+            text-align: left;
+        }
+        
+        #explanation-text .step-explanation {
+            color: var(--neon-cyan);
+            font-weight: 600;
+        }
+
+        #quiz-navigation { margin-top: 20px; }
+        
+        #quiz-results-screen {
+            display: none;
+            animation: fadeIn 1s;
+        }
+        #quiz-results-screen h3 { font-size: 2.5rem; color: var(--neon-cyan); }
+        #final-score { font-size: 4rem; color: var(--highlight-yellow); text-shadow: var(--glow-shadow-yellow); margin: 10px 0; }
+        #score-message { font-size: 1.3rem; margin-bottom: 30px; }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            background-color: var(--bg-card);
+            margin: 10% auto;
+            padding: 30px;
+            border: 1px solid var(--neon-cyan);
+            border-radius: 15px;
+            width: 80%;
+            max-width: 800px;
+            box-shadow: 0 0 40px var(--neon-cyan);
+            position: relative;
+        }
+        .close-modal {
+            color: #aaa;
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close-modal:hover,
+        .close-modal:focus {
+            color: var(--warning-red);
+            text-decoration: none;
+            cursor: pointer;
+        }
+        #preview-content h4 {
+            color: var(--neon-cyan);
+            margin-top: 15px;
+            border-top: 1px solid var(--primary-blue);
+            padding-top: 10px;
+        }
+        #preview-content .user-answer.correct { color: var(--accent-green); }
+        #preview-content .user-answer.incorrect { color: var(--warning-red); }
+        
+        /* Confetti */
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 999;
+        }
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 20px;
+            background-color: #f00;
+            opacity: 0.7;
+            animation: confetti-fall 5s linear infinite;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 40px;
+            background-color: var(--bg-card);
+            border-top: 2px solid var(--deep-purple);
+            box-shadow: 0 -4px 30px rgba(103, 58, 183, 0.3);
+        }
+        
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 768px) {
+            .main-header h1 { font-size: 2.5rem; }
+            .lesson-selector-box { display: block; }
+            #lesson-select { width: 100%; }
+            .section-header { gap: 10px; }
+            .section-header h2 { font-size: 1.6rem; }
+            .section-header .fa-solid { font-size: 1.8rem; }
+            .card { padding: 20px; }
+            .mistake-box { grid-template-columns: 1fr; }
+            .quiz-grid { grid-template-columns: 1fr; }
+            .modal-content { width: 95%; margin: 20% auto; }
+        }
+
+    </style>
+</head>
+<body class="no-select">
+
+    <div class="particles"></div>
+    <div id="confetti-container" class="confetti-container"></div>
+
+    <header class="main-header">
+        <h1>Magaby Maths World 🚀</h1>
+        <div class="lesson-selector-box">
+            <label for="lesson-select">🌟 Choose Your Adventure:</label>
+            <select id="lesson-select"></select>
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <!-- SECTION 1: INTRODUCTION -->
+        <section id="introduction">
+            <div class="section-header">
+                <i class="fa-solid fa-lightbulb"></i><i class="fa-solid fa-bolt"></i>
+                <h2>1. The Hook & The Problem</h2>
+            </div>
+            <div class="card" id="introduction-content">
+                <!-- JS will populate this -->
+            </div>
+        </section>
+
+        <!-- SECTION 2: DAILY LIFE -->
+        <section id="daily-life">
+            <div class="section-header">
+                <i class="fa-solid fa-people-roof"></i><i class="fa-solid fa-clock"></i>
+                <h2>2. Maths in Our Daily Lives</h2>
+            </div>
+            <div class="card" id="daily-life-content">
+                 <!-- JS will populate this -->
+            </div>
+        </section>
+        
+        <!-- SECTION 3: KEY TERMS -->
+        <section id="key-terms">
+            <div class="section-header">
+                <i class="fa-solid fa-key"></i><i class="fa-solid fa-book-open-reader"></i>
+                <h2>3. Key Terms & Definitions</h2>
+            </div>
+            <div class="card" id="key-terms-content">
+                 <!-- JS will populate this -->
+            </div>
+        </section>
+
+        <!-- SECTION 4: STEP-BY-STEP -->
+        <section id="step-by-step">
+            <div class="section-header">
+                <i class="fa-solid fa-shoe-prints"></i><i class="fa-solid fa-person-chalkboard"></i>
+                <h2>4. Step-by-Step Guide</h2>
+            </div>
+            <div class="card" id="step-by-step-content">
+                 <!-- JS will populate this -->
+            </div>
+        </section>
+        
+        <!-- SECTION 5: REAL-LIFE APPLICATION -->
+        <section id="real-life-app">
+            <div class="section-header">
+                <i class="fa-solid fa-cart-shopping"></i><i class="fa-solid fa-city"></i>
+                <h2>5. Real-Life Situation</h2>
+            </div>
+            <div class="card" id="real-life-app-content">
+                <!-- JS will populate this -->
+            </div>
+        </section>
+        
+        <!-- SECTION 6: FINANCIAL LITERACY -->
+        <section id="financial-lit">
+            <div class="section-header">
+                <i class="fa-solid fa-naira-sign"></i><i class="fa-solid fa-piggy-bank"></i>
+                <h2>6. Financial Challenge</h2>
+            </div>
+            <div class="card" id="financial-lit-content">
+                <!-- JS will populate this -->
+            </div>
+        </section>
+
+        <!-- SECTION 7: MATH TRICKS -->
+        <section id="math-tricks">
+            <div class="section-header">
+                <i class="fa-solid fa-wand-magic-sparkles"></i><i class="fa-solid fa-star"></i>
+                <h2>7. Pro-Tips & Tricks</h2>
+            </div>
+            <div class="card" id="math-tricks-content">
+                <!-- JS will populate this -->
+            </div>
+        </section>
+        
+        <!-- SECTION 8: COMMON MISTAKES -->
+        <section id="common-mistakes">
+            <div class="section-header">
+                <i class="fa-solid fa-circle-exclamation"></i><i class="fa-solid fa-bug"></i>
+                <h2>8. Common Mistakes to Avoid</h2>
+            </div>
+            <div class="card" id="common-mistakes-content">
+                 <!-- JS will populate this -->
+            </div>
+        </section>
+
+        <!-- SECTION 9: PRACTICE ZONE -->
+        <section id="practice">
+            <div class="section-header">
+                <i class="fa-solid fa-dumbbell"></i><i class="fa-solid fa-brain"></i>
+                <h2>9. Practice & Challenge Zone</h2>
+            </div>
+            <div class="card" id="practice-content">
+                 <!-- JS will populate this -->
+            </div>
+        </section>
+
+        <!-- SECTION 10: SUMMARY -->
+        <section id="summary">
+            <div class="section-header">
+                <i class="fa-solid fa-list-check"></i><i class="fa-solid fa-award"></i>
+                <h2>10. Summary of Key Steps</h2>
+            </div>
+            <div class="card" id="summary-content">
+                 <!-- JS will populate this -->
+            </div>
+        </section>
+        
+        <!-- SECTION 11: QUIZ -->
+        <section id="quiz-section">
+            <div class="section-header">
+                <i class="fa-solid fa-trophy"></i><i class="fa-solid fa-vial-circle-check"></i>
+                <h2>11. Test Your Knowledge!</h2>
+            </div>
+            <div class="card">
+                <div id="quiz-container">
+                    <div id="quiz-start-screen">
+                        <h3>Ready to show what you've learned? 🧠✨</h3>
+                        <p>You'll face 5 random questions on this topic. Give it your best shot! 🚀</p><br>
+                        <button id="start-quiz-btn" class="btn">Start Quiz Now!</button>
+                    </div>
+                    <div id="quiz-main-screen">
+                        <p id="quiz-progress">Question 1 of 5</p>
+                        <h3 id="question-text">Question text goes here...</h3>
+                        <div class="quiz-grid" id="options-container">
+                            <!-- Options will be generated by JS -->
+                        </div>
+                        <div id="quiz-feedback">
+                            <div id="explanation-text"></div>
+                        </div>
+                        <div id="quiz-navigation">
+                            <button id="next-question-btn" class="btn" style="display:none;">Next Question &rarr;</button>
+                        </div>
+                    </div>
+                    <div id="quiz-results-screen">
+                        <h3>🎉 Quiz Complete! 🎉</h3>
+                        <p>Here's how you did:</p>
+                        <div id="final-score"></div>
+                        <p id="score-message"></p>
+                        <button id="reset-quiz-btn" class="btn">Try Again 🔄</button>
+                        <button id="preview-answers-btn" class="btn">Review Answers 📝</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <!-- Modal for Previewing Answers -->
+    <div id="preview-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Your Quiz Review 📝</h2>
+            <div id="preview-content"></div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 Magaby Mathematics. Making Maths Fun! ✨</p>
+        <p>All rights reserved. Designed for an engaging learning experience in Nigeria and beyond. 🇳🇬</p>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+    // --- CONTENT PROTECTION ---
+    document.addEventListener('contextmenu', event => event.preventDefault());
+    document.addEventListener('keydown', e => {
+        if (e.ctrlKey && (e.key === 's' || e.key === 'c' || e.key === 'u' || e.key === 'p')) {
+            e.preventDefault();
+        }
+        if (e.key === 'PrintScreen') {
+            e.preventDefault();
+        }
+    });
+
+    // --- DYNAMIC HEADER PARTICLES ---
+    const particlesContainer = document.querySelector('.particles');
+    const colors = ['var(--primary-blue)', 'var(--accent-green)', 'var(--highlight-yellow)', 'var(--deep-purple)', 'var(--neon-pink)', 'var(--neon-cyan)'];
+    for (let i = 0; i < 20; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = `${Math.random() * 100}%`;
+        particle.style.top = `${Math.random() * 100}%`;
+        const size = Math.random() * 10 + 5;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        particle.style.animationDelay = `${Math.random() * 20}s`;
+        particlesContainer.appendChild(particle);
+    }
+    
+    // --- DATA: 5 FOCUSED LESSONS ---
+    const lessonsData = [
+        // Lesson 1: Ascending Order
+        {
+            title: "Arranging Numbers in Ascending Order",
+            topicKey: "ascending",
+            introduction: `
+                <div class="hook-problem">
+                    <h3>🤔 Have you ever wondered...</h3>
+                    <p>...how your teacher 🧑‍🏫 arranges your test scores from lowest to highest to see who improved the most? 📈 That's ascending order in action!</p>
+                </div>
+                <div class="hook-problem">
+                    <h3>Problem Situation 🤯</h3>
+                    <p>👩 <span class="important-name">Chiamaka</span> is helping her mother arrange prices of items in their shop, from the cheapest to the most expensive. The prices are <span class="currency">₦500</span>, <span class="currency">₦1,200</span>, <span class="currency">₦950</span>, and <span class="currency">₦250</span>. How can she quickly put them in the right order? Let's find out! 🛍️</p>
+                </div>`,
+            dailyLife: `
+                <details>
+                    <summary>📱 Phone Numbers & Contacts</summary>
+                    <div class="details-content"><p>When you save contacts, your phone often lists them alphabetically (A-Z), which is a form of ascending order! 🔤 Similarly, sorting numbers from smallest to largest helps in data entry.</p></div>
+                </details>
+                <details>
+                    <summary>🏆 Sports Leagues</summary>
+                    <div class="details-content"><p>League tables are sorted by points, from highest to lowest (that's descending), but if you wanted to see the teams with the fewest points, you'd list them in ascending order! ⚽</p></div>
+                </details>
+                <details>
+                    <summary>🛍️ Shopping Prices</summary>
+                    <div class="details-content"><p>Online stores like Jumia or Konga let you sort items by price 'Low to High'. This is ascending order, helping you find the best deals first! 💸</p></div>
+                </details>
+                <details>
+                    <summary>📏 Measuring Height</summary>
+                    <div class="details-content"><p>When lining up students in a class from shortest to tallest for a photo 📸, you are using ascending order. 🧑‍🤝‍🧑</p></div>
+                </details>
+                <details>
+                    <summary>📚 Library Books</summary>
+                    <div class="details-content"><p>Librarians arrange books using a numbering system (like the Dewey Decimal System). Finding a book means looking for numbers in their correct, ascending sequence. 📖</p></div>
+                </details>`,
+            keyTerms: `
+                <div class="term">
+                    <i class="fa-solid fa-arrow-up-1-9"></i>
+                    <div class="term-def"><h4>Ascending Order 🧗‍♀️</h4><p>Arranging numbers from the <strong class="math-term">smallest</strong> value to the <strong class="math-term">largest</strong> value. Think of climbing up a staircase: 1, 2, 3... </p></div>
+                </div>
+                <div class="term">
+                    <i class="fa-solid fa-less-than"></i>
+                    <div class="term-def"><h4>Less Than (<) 👉</h4><p>A symbol used to show that one number is smaller than another. For example, <strong class="math-term">5 < 10</strong>. The symbol points to the smaller number.</p></div>
+                </div>
+                <div class="term">
+                    <i class="fa-solid fa-ruler-horizontal"></i>
+                    <div class="term-def"><h4>Place Value 🗺️</h4><p>The value of a digit based on its position in a number (e.g., in 25, the '2' is in the tens place and means 20). This is key to comparing numbers!</p></div>
+                </div>`,
+            stepByStep: `
+                <h4>Let's arrange these numbers in ascending order: <strong class="math-term">3,450</strong>; <strong class="math-term">985</strong>; <strong class="math-term">3,540</strong>; <strong class="math-term">12,100</strong>.</h4>
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content"><h4>Count the Digits 🔢</h4><p>First, look at how many digits each number has. Numbers with fewer digits are smaller. <br>• 985 (3 digits) 🐭 <br>• 3,450 (4 digits) <br>• 3,540 (4 digits) <br>• 12,100 (5 digits) 🐘 <br>Immediately, we know <strong class="math-term">985</strong> is the smallest.</p></div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content"><h4>Compare Numbers with the Same Digit Count 🧐</h4><p>We have two numbers with 4 digits: 3,450 and 3,540. Start comparing from the leftmost digit. <br>• Thousands place: Both have '3'. It's a tie! 🤝 <br>• Hundreds place: One has '4' (400), the other has '5' (500). Since 4 is less than 5, <strong class="math-term">3,450</strong> is smaller than <strong class="math-term">3,540</strong>.</p></div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content"><h4>Place the Largest Number Last 👑</h4><p>The number with the most digits, <strong class="math-term">12,100</strong> (5 digits), is the largest of all.</p></div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content"><h4>Write the Final Order ✅</h4><p>Now, put them all together from smallest to largest. <br>The final ascending order is: <span class="final-answer">985; 3,450; 3,540; 12,100</span></p></div>
+                </div>`,
+            realLifeApp: `
+                <h4>Sorting JAMB Scores 🎓</h4>
+                <p>The head teacher of a school, 👩‍🏫 <span class="important-name">Mrs. Adebayo</span>, wants to award the five most improved students based on their JAMB scores. She has the scores of five students: 🧑‍🎓 <span class="important-name">Tunde</span> (254), <span class="important-name">Fatima</span> (215), <span class="important-name">Emeka</span> (259), <span class="important-name">Aisha</span> (209), and <span class="important-name">David</span> (219). Arrange their scores in ascending order to help her see the range of performance.</p>
+                <button class="btn" onclick="toggleVisibility('solution-1')">Show Solution</button>
+                <div id="solution-1" class="solution-box">
+                    <h4>Here's how to solve it: 📝</h4>
+                    <ol>
+                        <li><strong>Step 1:</strong> List all the scores: 254, 215, 259, 209, 219.</li>
+                        <li><strong>Step 2:</strong> All numbers have 3 digits, so we compare from the left (the hundreds place). All start with '2', so we move to the tens place. ➡️</li>
+                        <li><strong>Step 3:</strong> Look at the tens place: We have '5', '1', '5', '0', '1'. The smallest is '0', so <strong class="math-term">209</strong> is the first number.</li>
+                        <li><strong>Step 4:</strong> Next smallest tens digits are '1'. We have 215 and 219. Compare their units place: 5 is less than 9, so <strong class="math-term">215</strong> comes before <strong class="math-term">219</strong>.</li>
+                        <li><strong>Step 5:</strong> The remaining numbers are 254 and 259. Their tens digits are both '5'. Compare their units place: 4 is less than 9, so <strong class="math-term">254</strong> comes before <strong class="math-term">259</strong>.</li>
+                        <li><strong>Final Order:</strong> The scores in ascending order are: <span class="final-answer">209, 215, 219, 254, 259</span>.</li>
+                    </ol>
+                </div>`,
+            financialLit: `
+                <h4>Planning a Budget 💰</h4>
+                <p>👦 <span class="important-name">Ade</span> wants to buy a few items for his new school term. He has a list of costs: School bag 🎒 (<span class="currency">₦8,500</span>), Textbooks 📚 (<span class="currency">₦15,000</span>), New Shoes 👟 (<span class="currency">₦7,999</span>), and a Scientific Calculator 🧮 (<span class="currency">₦8,450</span>). To plan his spending, he wants to list the items from cheapest to most expensive. Help Ade arrange these costs in ascending order.</p>
+                <button class="btn" onclick="toggleVisibility('solution-2')">Show Solution</button>
+                <div id="solution-2" class="solution-box">
+                    <h4>Let's help Ade budget: 🧾</h4>
+                    <ol>
+                        <li><strong>The costs are:</strong> 8,500; 15,000; 7,999; 8,450.</li>
+                        <li><strong>Step 1 (Count Digits):</strong> 15,000 has 5 digits, making it the largest. 7,999, 8,500, and 8,450 all have 4 digits.</li>
+                        <li><strong>Step 2 (Compare 4-digit numbers):</strong> Compare 7,999, 8,500, and 8,450. Look at the thousands place: '7' is the smallest, so <strong class="math-term">7,999</strong> is the cheapest item.</li>
+                        <li><strong>Step 3 (Compare remaining numbers):</strong> Now compare 8,500 and 8,450. Thousands place is '8' for both. Hundreds place is '5' vs '4'. Since 4 is smaller than 5, <strong class="math-term">8,450</strong> is cheaper than <strong class="math-term">8,500</strong>.</li>
+                        <li><strong>Step 4 (Final Assembly):</strong> Put them all in order.</li>
+                        <li><strong>The ascending order of costs is:</strong> <span class="final-answer">₦7,999 (Shoes), ₦8,450 (Calculator), ₦8,500 (Bag), ₦15,000 (Textbooks)</span>.</li>
+                    </ol>
+                </div>`,
+            mathTricks: `
+                <div class="pro-tip">
+                    <i class="fa-solid fa-lightbulb"></i>
+                    <div>
+                        <h4>The "Digit Count" Shortcut! ⚡</h4>
+                        <p>Before you start comparing digits one by one, always count the number of digits in each number first. Any number with fewer digits is ALWAYS smaller than a number with more digits. For example, <strong class="math-term">99,999</strong> (5 digits) is smaller than <strong class="math-term">100,000</strong> (6 digits). This saves a lot of time! ⏱️</p>
+                    </div>
+                </div>
+                <div class="pitfall">
+                    <i class="fa-solid fa-skull-crossbones"></i>
+                    <div>
+                        <h4>The Pitfall ⚠️</h4>
+                        <p>This trick only works when the number of digits is different. If two numbers have the SAME number of digits, you MUST compare them from left to right, one place value at a time. Don't get tricked! 😜</p>
+                    </div>
+                </div>`,
+            commonMistakes: `
+                <h4>Mistake: Forgetting to Check All Digits 🙈</h4>
+                <p>A common error is to stop comparing as soon as you find a difference, even if it's not the first different digit from the left.</p>
+                <div class="mistake-box">
+                    <div class="wrong-way">
+                        <h4>❌ Wrong Way</h4>
+                        <p>Comparing <strong class="math-term">4,590</strong> and <strong class="math-term">4,610</strong>.</p>
+                        <p>A student might look at the '9' and '1' in the tens place and think 4,610 is smaller because 1 < 9. This is wrong! 🛑</p>
+                    </div>
+                    <div class="right-way">
+                        <h4>✅ Right Way</h4>
+                        <p>Comparing <strong class="math-term">4,590</strong> and <strong class="math-term">4,610</strong>.</p>
+                        <p>Start from the left. Thousands place: both '4'. Hundreds place: '5' vs '6'. Since 5 is less than 6, <strong class="math-term">4,590</strong> is the smaller number. You must start from the largest place value! 👍</p>
+                    </div>
+                </div>`,
+            practice: `
+                <div class="practice-problem">
+                    <h4>🧠 Standard Practice</h4>
+                    <p>Arrange the following populations of Nigerian cities in ascending order: Kano (3,931,300), Ibadan (3,552,000), Lagos (14,862,000), Abuja (3,278,000). 🏙️</p>
+                    <button class="btn" onclick="toggleVisibility('hint-3')">Show Hint</button>
+                    <button class="btn" onclick="toggleVisibility('solution-3')">Show Solution</button>
+                    <div id="hint-3" class="solution-box hint-box"><p>Start by comparing the numbers with fewer digits (millions) before looking at the one with more digits (ten millions). 🤔</p></div>
+                    <div id="solution-3" class="solution-box">
+                        <p><strong>Solution:</strong><br>1. Lagos (14,862,000) has 8 digits, the rest have 7. So Lagos is the largest. 👑<br>2. Compare the 7-digit numbers: 3,931,300 (Kano), 3,552,000 (Ibadan), 3,278,000 (Abuja).<br>3. They all start with '3' in the millions place. Let's check the hundred thousands place: Kano has '9', Ibadan has '5', Abuja has '2'.<br>4. Since 2 < 5 < 9, the order is Abuja, then Ibadan, then Kano.<br><strong>Final Order:</strong> <span class="final-answer">Abuja (3,278,000), Ibadan (3,552,000), Kano (3,931,300), Lagos (14,862,000)</span>.</p>
+                    </div>
+                </div>
+                <div class="practice-problem">
+                    <h4>🔥 Challenge Problem</h4>
+                    <p>👨‍💼 <span class="important-name">Mr. Eze</span> is a stock trader. In one week, his top four company stocks had the following values: Dangote Cement (<span class="currency">₦27,540,500,000</span>), MTN Nigeria (<span class="currency">₦4,150,750,000,000</span>), GTCo (<span class="currency">₦855,600,000,000</span>), and BUA Foods (<span class="currency">₦1,180,000,000,000</span>). Arrange these company valuations in ascending order. 💹</p>
+                    <button class="btn" onclick="toggleVisibility('hint-4')">Show Hint</button>
+                    <button class="btn" onclick="toggleVisibility('solution-4')">Show Solution</button>
+                    <div id="hint-4" class="solution-box hint-box"><p>Don't be scared by the big numbers! 😱 Use the 'Digit Count' trick first. Count the number of digits in each valuation. This will quickly tell you which numbers are smaller or larger.</p></div>
+                    <div id="solution-4" class="solution-box">
+                        <p><strong>Solution:</strong><br>1. <strong>Count the digits:</strong><br> - Dangote: 11 digits (Tens of Billions)<br> - MTN: 13 digits (Trillions)<br> - GTCo: 12 digits (Hundreds of Billions)<br> - BUA: 13 digits (Trillions)<br>
+                        2. The number with the fewest digits is the smallest: <strong class="math-term">Dangote Cement (11 digits)</strong> is first. 1️⃣<br>
+                        3. The number with 12 digits is next: <strong class="math-term">GTCo (12 digits)</strong> is second. 2️⃣<br>
+                        4. Now compare the two 13-digit numbers (trillions): MTN (<strong class="math-term">4,150...</strong>) and BUA (<strong class="math-term">1,180...</strong>).<br>
+                        5. Compare their leftmost digit (trillions place): MTN has '4', BUA has '1'. Since 1 is smaller than 4, BUA is smaller than MTN.<br>
+                        <strong>Final Order:</strong> <span class="final-answer">Dangote Cement, GTCo, BUA Foods, MTN Nigeria</span>. 🏆</p>
+                    </div>
+                </div>`,
+            summary: `
+                <h4>Golden Rules for Ascending Order 🏆</h4>
+                <ol>
+                    <li><strong>Count First, Compare Later:</strong> 🔢 Always count the number of digits. Fewer digits means a smaller number.</li>
+                    <li><strong>Go Left to Right:</strong> ➡️ If digit counts are equal, start comparing from the very first digit on the left.</li>
+                    <li><strong>Find the First Difference:</strong> 🔍 Move to the right, one place value at a time, until you find two digits that are different. The number with the smaller digit is the smaller number.</li>
+                    <li><strong>Smallest to Largest:</strong> 🧗‍♀️ Write your final list starting with the smallest number and ending with the largest.</li>
+                </ol>`,
+        },
+        // Lesson 2: Comparing Numbers in Millions
+        {
+            title: "Comparing Numbers in Millions",
+            topicKey: "compare_millions",
+            introduction: `
+                <div class="hook-problem">
+                    <h3>🤔 Have you ever wondered...</h3>
+                    <p>...how people know which city in Nigeria is more populated? They compare their populations, which are almost always in the millions! 🏙️</p>
+                </div>
+                <div class="hook-problem">
+                    <h3>Problem Situation 🤯</h3>
+                    <p>👧 <span class="important-name">Bisi</span> is doing a geography project. She finds that the population of Ibadan is about <strong class="math-term">3,552,000</strong> people, and the population of Port Harcourt is about <strong class="math-term">3,171,000</strong> people. To state her facts correctly, she needs to know which city has a larger population. How can she be sure? ⚖️</p>
+                </div>`,
+            dailyLife: `
+                <details>
+                    <summary>🗳️ Election Results</summary>
+                    <div class="details-content"><p>In national or state elections, the number of votes cast for candidates is in the millions. News channels compare these numbers constantly to report who is winning. 🗳️</p></div>
+                </details>
+                <details>
+                    <summary>🎵 Music Streaming</summary>
+                    <div class="details-content"><p>Artists like Burna Boy, Wizkid, and Davido have songs with hundreds of millions of streams on Spotify or Apple Music. We compare these numbers to see which songs are most popular. 🎶</p></div>
+                </details>
+                <details>
+                    <summary>🚗 Car Prices</summary>
+                    <div class="details-content"><p>The price of new cars in Nigeria, especially SUVs, is often in the tens of millions of Naira. A car might cost <span class="currency">₦25,500,000</span> while another costs <span class="currency">₦24,900,000</span>. Comparing them helps a buyer decide. 🚙</p></div>
+                </details>
+                <details>
+                    <summary>🏠 Real Estate</summary>
+                    <div class="details-content"><p>The price of a house or a plot of land in cities like Lagos or Abuja can easily be in the tens or hundreds of millions of Naira. Buyers compare prices to find the best value. 🏡</p></div>
+                </details>
+                <details>
+                    <summary>📺 YouTube Views</summary>
+                    <div class="details-content"><p>Popular Nigerian comedians and creators like Mark Angel Comedy get millions of views on their videos. Comparing view counts shows how viral a video has become. ▶️</p></div>
+                </details>`,
+            keyTerms: `
+                <div class="term">
+                    <i class="fa-solid fa-users"></i>
+                    <div class="term-def"><h4>Million 👨‍👩‍👧‍👦</h4><p>A large number equal to one thousand thousand (<strong class="math-term">1,000,000</strong>). It's a '1' followed by six zeros.</p></div>
+                </div>
+                <div class="term">
+                    <i class="fa-solid fa-greater-than-equal"></i>
+                    <div class="term-def"><h4>Comparison Symbols ⚖️</h4><p>The main symbols we use are: <strong class="math-term">></strong> (greater than), <strong class="math-term"><</strong> (less than), and <strong class="math-term">=</strong> (equal to).</p></div>
+                </div>
+                <div class="term">
+                    <i class="fa-solid fa-magnifying-glass-chart"></i>
+                    <div class="term-def"><h4>Digit-by-Digit Analysis 🧐</h4><p>The method of comparing numbers by looking at the digits in each place value, starting from the far left until a difference is found.</p></div>
+                </div>`,
+            stepByStep: `
+                <h4>Let's compare the populations of Ibadan and Port Harcourt: <strong class="math-term">3,552,000</strong> and <strong class="math-term">3,171,000</strong>.</h4>
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content"><h4>Count the Digits 🔢</h4><p>First, check the number of digits. <br>• 3,552,000 has 7 digits. <br>• 3,171,000 has 7 digits. <br>Since they have the same number of digits, we must compare the digits themselves. ✅</p></div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content"><h4>Start Comparing from the Left ⬅️</h4><p>We start at the largest place value, the millions place. <br>• Millions place: Both numbers have a '3'. It's a tie! 🤝 We move to the next digit.</p></div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content"><h4>Check the Hundred Thousands Place 👉</h4><p>This is the first place where we might find a difference. <br>• Ibadan's number has a '5' in this place. <br>• Port Harcourt's number has a '1' in this place.</p></div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content"><h4>Declare the Winner! 🏆</h4><p>Since <strong class="math-term">5</strong> is greater than <strong class="math-term">1</strong>, the first number is larger. We don't need to check the rest of the digits. <br>Therefore: <span class="final-answer">3,552,000 > 3,171,000</span>. Ibadan has a larger population.</p></div>
+                </div>`,
+            realLifeApp: `
+                <h4>Comparing Project Costs 🏗️</h4>
+                <p>The Federal Ministry of Works is reviewing bids for two road construction projects. <br>• Project A (Lagos-Ibadan Expressway section) costs <span class="currency">₦85,450,000</span>. <br>• Project B (Second Niger Bridge approach road) costs <span class="currency">₦85,425,000</span>. <br>The numbers look very similar! Which project is more expensive? 🤔</p>
+                <button class="btn" onclick="toggleVisibility('solution-13')">Show Solution</button>
+                <div id="solution-13" class="solution-box">
+                    <h4>Let's break it down: 📝</h4>
+                    <ol>
+                        <li><strong>The numbers:</strong> 85,450,000 and 85,425,000.</li>
+                        <li><strong>Step 1 (Check Digits):</strong> Both are 8-digit numbers. ✅</li>
+                        <li><strong>Step 2 (Compare from Left):</strong>
+                            <ul>
+                                <li>Ten Millions: Both '8'. Tie. 🤝</li>
+                                <li>Millions: Both '5'. Tie. 🤝</li>
+                                <li>Hundred Thousands: Both '4'. Tie. 🤝</li>
+                                <li>Ten Thousands: Project A has '5', Project B has '2'. We found the difference! 💥</li>
+                            </ul>
+                        </li>
+                        <li><strong>Step 3 (Conclusion):</strong> Since 5 is greater than 2, Project A's cost is higher.</li>
+                        <li><strong>Answer:</strong> <span class="final-answer">Project A is more expensive. (₦85,450,000 > ₦85,425,000)</span>.</li>
+                    </ol>
+                </div>`,
+            financialLit: `
+                <h4>Choosing a Savings Account 🏦</h4>
+                <p>👨‍💼 <span class="important-name">Mr. Salami</span> won a lottery and wants to deposit <span class="currency">₦5,000,000</span>. He is looking at two banks. <br>• First Bank offers an annual interest that will give him <span class="currency">₦5,250,000</span> after one year. <br>• GTBank offers an annual interest that will give him <span class="currency">₦5,255,000</span> after one year. <br>Which bank offers him a better return on his savings? 💰</p>
+                <button class="btn" onclick="toggleVisibility('solution-14')">Show Solution</button>
+                <div id="solution-14" class="solution-box">
+                    <h4>Let's find the better offer: 📈</h4>
+                    <ol>
+                        <li><strong>The amounts to compare are:</strong> 5,250,000 and 5,255,000.</li>
+                        <li><strong>Step 1 (Digits):</strong> Both are 7-digit numbers. ✅</li>
+                        <li><strong>Step 2 (Compare Left-to-Right):</strong>
+                            <ul>
+                                <li>Millions: Both '5'. Tie. 🤝</li>
+                                <li>Hundred Thousands: Both '2'. Tie. 🤝</li>
+                                <li>Ten Thousands: Both '5'. Tie. 🤝</li>
+                                <li>Thousands: First Bank has '0', GTBank has '5'. We found it! 💥</li>
+                            </ul>
+                        </li>
+                        <li><strong>Step 3 (Conclusion):</strong> Since 5 is greater than 0, GTBank's return is higher.</li>
+                        <li><strong>Answer:</strong> <span class="final-answer">GTBank offers a better return. (₦5,255,000 > ₦5,250,000)</span>.</li>
+                    </ol>
+                </div>`,
+            mathTricks: `
+                 <div class="pro-tip">
+                    <i class="fa-solid fa-lightbulb"></i>
+                    <div>
+                        <h4>The "Ignore the Zeros" Trick! ✂️</h4>
+                        <p>When comparing numbers like <strong class="math-term">4,500,000</strong> and <strong class="math-term">4,800,000</strong>, you can mentally chop off the same number of zeros from the end of both numbers. <br>This simplifies the problem to comparing <strong class="math-term">45</strong> and <strong class="math-term">48</strong>. It's much easier to see that 48 is bigger, so 4,800,000 is the larger number. 😉</p>
+                    </div>
+                </div>
+                <div class="pitfall">
+                    <i class="fa-solid fa-skull-crossbones"></i>
+                    <div>
+                        <h4>The Pitfall ⚠️</h4>
+                        <p>You MUST remove the exact same number of zeros from both numbers. If you compare <strong class="math-term">4,500,000</strong> and <strong class="math-term">480,000</strong>, you can't use this trick as easily because the number of zeros is different. The digit-count rule is safer here (7 digits vs 6 digits). 🛑</p>
+                    </div>
+                </div>`,
+            commonMistakes: `
+                <h4>Mistake: Reading from the Right ➡️</h4>
+                <p>Some students start comparing from the smallest place value (the right side), which is incorrect and gives the wrong answer most of the time.</p>
+                <div class="mistake-box">
+                    <div class="wrong-way">
+                        <h4>❌ Wrong Way</h4>
+                        <p>Comparing <strong class="math-term">2,500,000</strong> and <strong class="math-term">3,100,009</strong>.</p>
+                        <p>A student might see the '9' on the right of the second number and the '0' on the right of the first number and think the second number is bigger because 9 > 0. This is wrong! 🤦</p>
+                    </div>
+                    <div class="right-way">
+                        <h4>✅ Right Way</h4>
+                        <p>ALWAYS start from the left. ⬅️ <br>The millions place has a '2' vs a '3'. Since 3 > 2, the second number (<strong class="math-term">3,100,009</strong>) is bigger. The comparison is over in the very first step! 😎</p>
+                    </div>
+                </div>`,
+            practice: `
+                <div class="practice-problem">
+                    <h4>🧠 Standard Practice</h4>
+                    <p>The area of Kano State is approximately <strong class="math-term">20,131</strong> square kilometres. The area of Borno State is approximately <strong class="math-term">70,898</strong> square kilometres. Let's imagine these were costs in millions. Compare <span class="currency">₦20,131,000</span> and <span class="currency">₦70,898,000</span>. Which is larger? 🗺️</p>
+                    <button class="btn" onclick="toggleVisibility('hint-15')">Show Hint</button>
+                    <button class="btn" onclick="toggleVisibility('solution-15')">Show Solution</button>
+                    <div id="hint-15" class="solution-box hint-box"><p>Both are 8-digit numbers. Start your comparison from the ten millions place on the far left. 🤔</p></div>
+                    <div id="solution-15" class="solution-box">
+                        <p><strong>Solution:</strong><br>1. Numbers: 20,131,000 and 70,898,000.<br>2. Compare the ten millions place: '2' vs '7'.<br>3. Since 7 is greater than 2, the second number is larger. ✅<br><strong>Answer:</strong> <span class="final-answer">₦70,898,000 > ₦20,131,000</span>.</p>
+                    </div>
+                </div>
+                <div class="practice-problem">
+                    <h4>🔥 Challenge Problem</h4>
+                    <p>Three YouTubers are comparing their total channel views. <br>• 👦 <span class="important-name">Tayo</span> has <strong class="math-term">101,998,500</strong> views. <br>• 👧 <span class="important-name">Funke</span> has <strong class="math-term">110,001,000</strong> views. <br>• 👦 <span class="important-name">Sam</span> has <strong class="math-term">101,999,200</strong> views. <br>First, compare Tayo's and Sam's views. Then, state who has the most views overall. 🏆</p>
+                    <button class="btn" onclick="toggleVisibility('hint-16')">Show Hint</button>
+                    <button class="btn" onclick="toggleVisibility('solution-16')">Show Solution</button>
+                    <div id="hint-16" class="solution-box hint-box"><p>For Tayo vs Sam, their views are extremely close. You will need to compare them digit by digit quite far to the right. For the overall winner, compare all three numbers starting from the left. 👀</p></div>
+                    <div id="solution-16" class="solution-box">
+                        <p><strong>Part 1: Tayo vs Sam</strong><br>1. Tayo: 101,998,500<br>2. Sam:  101,999,200<br>3. Comparing from the left, they are identical up to the thousands place: 101,99... 🤝<br>4. In the thousands place, Tayo has '8' and Sam has '9'. 💥<br>5. Since 9 > 8, <strong class="math-term">Sam has more views than Tayo</strong>.<br><br><strong>Part 2: Overall Winner</strong><br>1. Compare all three: 101,998,500 (Tayo), 110,001,000 (Funke), 101,999,200 (Sam).<br>2. Look at the ten millions place. Tayo and Sam have '0', but Funke has '1'. 💥<br>3. Since 1 is greater than 0, Funke's number is the largest.<br><strong>Final Answer:</strong> <span class="final-answer">Funke has the most views overall.</span> 🥇</p>
+                    </div>
+                </div>`,
+            summary: `
+                <h4>Golden Rules for Comparing Millions 🏆</h4>
+                <ol>
+                    <li><strong>Check the Length:</strong> 📏 A 7-digit number (e.g., 9,000,000) is always smaller than an 8-digit number (e.g., 10,000,000).</li>
+                    <li><strong>Lead with the Left:</strong> ⬅️ Always, always, always start comparing from the largest place value on the far left.</li>
+                    <li><strong>The Decisive Digit:</strong> 🎯 The first pair of digits from the left that are not the same will decide which number is bigger.</li>
+                    <li><strong>Use the Symbols Correctly:</strong> 🐊 Remember the alligator mouth '>' or '<' always opens to eat the bigger number!</li>
+                </ol>`,
+        },
+        // Lesson 3: Expanded Form
+        {
+            title: "Converting Numbers into Expanded Form",
+            topicKey: "expanded_form",
+            introduction: `
+                <div class="hook-problem">
+                    <h3>🤔 Have you ever wondered...</h3>
+                    <p>...what each digit in a big number *really* means? When you see the price of a car 🚗 like <span class="currency">₦7,450,000</span>, the '7' isn't just a seven, it's <strong class="math-term">seven million</strong>! Expanded form helps us see this clearly. 🧐</p>
+                </div>
+                <div class="hook-problem">
+                    <h3>Problem Situation 🤯</h3>
+                    <p>👧 <span class="important-name">Funmi</span> is helping her dad write a cheque. The amount is <strong class="currency">₦34,275</strong>. To avoid mistakes, her dad asks her to break down the number to understand its parts: "How many ten thousands? How many thousands?..." This process of breaking down a number into the sum of its place values is called writing it in expanded form. ✍️</p>
+                </div>`,
+            dailyLife: `
+                <details>
+                    <summary>💰 Writing Cheques</summary>
+                    <div class="details-content"><p>When you write a cheque, you write the number in figures and in words. Understanding the expanded form (e.g., Five Thousand, Two Hundred Naira) helps you write the words correctly and prevents fraud. 📜</p></div>
+                </details>
+                <details>
+                    <summary>🧩 Understanding Place Value</summary>
+                    <div class="details-content"><p>Expanded form is the best way to truly understand place value. It shows that the '5' in 582 is not just '5', but '500'. This is a fundamental concept in all of mathematics! 💯</p></div>
+                </details>
+                <details>
+                    <summary>🧮 Mental Maths</summary>
+                    <div class="details-content"><p>Breaking numbers down can make mental calculations easier. To add 345 + 123, you can think (300+100) + (40+20) + (5+3). This is using expanded form in your head! 🧠</p></div>
+                </details>
+                <details>
+                    <summary>💻 Computer Science</summary>
+                    <div class="details-content"><p>Computers store numbers using a binary (base-2) system. Understanding how our decimal (base-10) system can be 'expanded' is the first step to understanding other number systems that are crucial in coding. 🤖</p></div>
+                </details>
+                <details>
+                    <summary>🔬 Scientific Notation</summary>
+                    <div class="details-content"><p>Scientists write very large or small numbers using powers of 10 (e.g., 3 x 10⁸). This is a type of advanced expanded form, showing a number as a product of its digits and a base. ⚛️</p></div>
+                </details>`,
+            keyTerms: `
+                <div class="term">
+                    <i class="fa-solid fa-expand"></i>
+                    <div class="term-def"><h4>Expanded Form ↔️</h4><p>A way of writing a number that shows the value of each of its digits. It's written as a sum. Example: 345 = <strong class="math-term">300 + 40 + 5</strong>.</p></div>
+                </div>
+                <div class="term">
+                    <i class="fa-solid fa-signs-post"></i>
+                    <div class="term-def"><h4>Place Value 📍</h4><p>The value a digit has because of its position in a number. In <strong class="math-term">7,891</strong>, the '8' is in the hundreds place, so its value is <strong class="math-term">800</strong>.</p></div>
+                </div>
+                <div class="term">
+                    <i class="fa-solid fa-plus"></i>
+                    <div class="term-def"><h4>Sum ➕</h4><p>The result of adding two or more numbers together. Expanded form expresses a number as a sum of its place values.</p></div>
+                </div>`,
+            stepByStep: `
+                <h4>Let's write the number <strong class="math-term">4,762,398</strong> in expanded form.</h4>
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content"><h4>Identify the Place Value of Each Digit 🗺️</h4><p>Start from the left and identify the position of each non-zero digit. <br>• <strong>4</strong> is in the Millions place. <br>• <strong>7</strong> is in the Hundred Thousands place. <br>• <strong>6</strong> is in the Ten Thousands place. <br>• <strong>2</strong> is in the Thousands place. <br>• <strong>3</strong> is in the Hundreds place. <br>• <strong>9</strong> is in the Tens place. <br>• <strong>8</strong> is in the Units place.</p></div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content"><h4>Write the Value of Each Digit 💰</h4><p>Now, write down the value that each digit represents. <br>• The '4' is worth <strong class="math-term">4,000,000</strong>. <br>• The '7' is worth <strong class="math-term">700,000</strong>. <br>• The '6' is worth <strong class="math-term">60,000</strong>. <br>• The '2' is worth <strong class="math-term">2,000</strong>. <br>• The '3' is worth <strong class="math-term">300</strong>. <br>• The '9' is worth <strong class="math-term">90</strong>. <br>• The '8' is worth <strong class="math-term">8</strong>.</p></div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content"><h4>Connect Them with Plus Signs! ➕</h4><p>Finally, write all these values down as an addition sentence. <br>The expanded form is: <span class="final-answer">4,000,000 + 700,000 + 60,000 + 2,000 + 300 + 90 + 8</span>.</p></div>
+                </div>`,
+            realLifeApp: `
+                <h4>Deconstructing a Population Figure 🏙️</h4>
+                <p>A demographer is analyzing the population of Lagos, which is estimated at <strong class="math-term">14,862,000</strong>. To present this in a report that emphasizes the scale, she wants to write it in expanded form. How would she do it? 📊</p>
+                <button class="btn" onclick="toggleVisibility('solution-19')">Show Solution</button>
+                <div id="solution-19" class="solution-box">
+                    <h4>Here's the expanded form of Lagos's population: 📝</h4>
+                    <ol>
+                        <li><strong>Number:</strong> 14,862,000</li>
+                        <li><strong>Breakdown by place value:</strong>
+                            <ul>
+                                <li><strong>1</strong> is in the Ten Millions place -> 10,000,000</li>
+                                <li><strong>4</strong> is in the Millions place -> 4,000,000</li>
+                                <li><strong>8</strong> is in the Hundred Thousands place -> 800,000</li>
+                                <li><strong>6</strong> is in the Ten Thousands place -> 60,000</li>
+                                <li><strong>2</strong> is in the Thousands place -> 2,000</li>
+                                <li>The other digits are zero, so we can ignore them. ✅</li>
+                            </ul>
+                        </li>
+                        <li><strong>Answer:</strong> The expanded form is <span class="final-answer">10,000,000 + 4,000,000 + 800,000 + 60,000 + 2,000</span>.</li>
+                    </ol>
+                </div>`,
+            financialLit: `
+                <h4>Understanding a Large Transaction 💸</h4>
+                <p>A company, "NaijaTech Innovators," just received an investment of <span class="currency">₦520,709,000</span>. The accountant needs to record this amount in a ledger by breaking it down into its constituent parts for a detailed financial statement. Write this amount in expanded form. 🧾</p>
+                <button class="btn" onclick="toggleVisibility('solution-20')">Show Solution</button>
+                <div id="solution-20" class="solution-box">
+                    <h4>Breaking down the investment: 💰</h4>
+                    <ol>
+                        <li><strong>The number is:</strong> 520,709,000.</li>
+                        <li><strong>Step 1 (Identify non-zero digits and their values):</strong>
+                            <ul>
+                                <li>The <strong>5</strong> is in the Hundred Millions place -> 500,000,000</li>
+                                <li>The <strong>2</strong> is in the Ten Millions place -> 20,000,000</li>
+                                <li>The <strong>7</strong> is in the Hundred Thousands place -> 700,000</li>
+                                <li>The <strong>9</strong> is in the Thousands place -> 9,000</li>
+                            </ul>
+                        </li>
+                        <li><strong>Step 2 (Combine with plus signs):</strong> Add the values together.</li>
+                        <li><strong>Answer:</strong> The expanded form is <span class="final-answer">500,000,000 + 20,000,000 + 700,000 + 9,000</span>.</li>
+                    </ol>
+                </div>`,
+            mathTricks: `
+                 <div class="pro-tip">
+                    <i class="fa-solid fa-lightbulb"></i>
+                    <div>
+                        <h4>The "Digit and Zeros" Trick! 🎯</h4>
+                        <p>To find the value of any digit, simply write that digit down and then replace all the digits to its right with zeros. <br>For the number <strong class="math-term">8,421,975</strong>: <br>• For the '4': Write '4', then add zeros for the 5 digits after it -> 400,000. <br>• For the '9': Write '9', then add zeros for the 2 digits after it -> 900. <br>This is a fast way to get each part of the expanded form without thinking too hard about the place value names! 😉</p>
+                    </div>
+                </div>
+                <div class="pitfall">
+                    <i class="fa-solid fa-skull-crossbones"></i>
+                    <div>
+                        <h4>The Pitfall ⚠️</h4>
+                        <p>Make sure you count the number of zeros correctly! Forgetting even one zero will completely change the value. Double-check your work. 👀</p>
+                    </div>
+                </div>`,
+            commonMistakes: `
+                <h4>Mistake: Forgetting the Zeros as Placeholders 🙈</h4>
+                <p>A common error is to ignore a zero in the middle of a number, which messes up the place value of all subsequent digits.</p>
+                <div class="mistake-box">
+                    <div class="wrong-way">
+                        <h4>❌ Wrong Way</h4>
+                        <p>Writing <strong class="math-term">604,000</strong> in expanded form.</p>
+                        <p>A student might write: 60,000 + 4,000. They saw the '6' and '4' and just added zeros, but they didn't account for the '0' in the ten thousands place. 🤦‍♂️</p>
+                    </div>
+                    <div class="right-way">
+                        <h4>✅ Right Way</h4>
+                        <p>In <strong class="math-term">604,000</strong>: <br>• The '6' is in the hundred thousands place -> <strong class="math-term">600,000</strong>. <br>• The '0' in the ten thousands place has a value of 0, so we can skip it. <br>• The '4' is in the thousands place -> <strong class="math-term">4,000</strong>. <br>The correct form is <span class="final-answer">600,000 + 4,000</span>. 👍</p>
+                    </div>
+                </div>`,
+            practice: `
+                <div class="practice-problem">
+                    <h4>🧠 Standard Practice</h4>
+                    <p>Write the number <strong class="math-term">9,057,302</strong> in expanded form.</p>
+                    <button class="btn" onclick="toggleVisibility('hint-21')">Show Hint</button>
+                    <button class="btn" onclick="toggleVisibility('solution-21')">Show Solution</button>
+                    <div id="hint-21" class="solution-box hint-box"><p>Remember to handle the zeros correctly. You don't need to write "+ 0" in your final answer, but make sure they hold the place for the other digits. 🤔</p></div>
+                    <div id="solution-21" class="solution-box">
+                        <p><strong>Solution:</strong><br>• <strong>9</strong> is in the millions place -> 9,000,000<br>• <strong>0</strong> in the hundred thousands place (skip)<br>• <strong>5</strong> is in the ten thousands place -> 50,000<br>• <strong>7</strong> is in the thousands place -> 7,000<br>• <strong>3</strong> is in the hundreds place -> 300<br>• <strong>0</strong> in the tens place (skip)<br>• <strong>2</strong> is in the units place -> 2<br><strong>Answer:</strong> <span class="final-answer">9,000,000 + 50,000 + 7,000 + 300 + 2</span></p>
+                    </div>
+                </div>
+                <div class="practice-problem">
+                    <h4>🔥 Challenge Problem</h4>
+                    <p>A number in expanded form is written as: <strong class="math-term">70,000,000,000 + 4,000,000,000 + 500,000,000 + 90,000 + 1,000 + 6</strong>. What is this number in standard form (the normal way of writing numbers)? This is a tricky one! 🤯</p>
+                    <button class="btn" onclick="toggleVisibility('hint-22')">Show Hint</button>
+                    <button class="btn" onclick="toggleVisibility('solution-22')">Show Solution</button>
+                    <div id="hint-22" class="solution-box hint-box"><p>This is the reverse! Think about the place value of each part. The largest part (70 billion) tells you how many digits the number will have. Write down the digits in their correct places, using zeros as placeholders for the missing place values (like millions, hundred thousands, etc.). 🧐</p></div>
+                    <div id="solution-22" class="solution-box">
+                        <p><strong>Solution:</strong><br>This is like assembling a puzzle. Let's look at the place values:🧩<br>• 70,000,000,000 -> a <strong>7</strong> in the Ten Billions place.<br>• 4,000,000,000 -> a <strong>4</strong> in the Billions place.<br>• 500,000,000 -> a <strong>5</strong> in the Hundred Millions place.<br>• No Ten Millions -> put a <strong>0</strong>.<br>• No Millions -> put a <strong>0</strong>.<br>• No Hundred Thousands -> put a <strong>0</strong>.<br>• 90,000 -> a <strong>9</strong> in the Ten Thousands place.<br>• 1,000 -> a <strong>1</strong> in the Thousands place.<br>• No Hundreds -> put a <strong>0</strong>.<br>• No Tens -> put a <strong>0</strong>.<br>• 6 -> a <strong>6</strong> in the Units place.<br><br>Putting it all together: 74,500,091,006.<br><strong>Answer:</strong> <span class="final-answer">74,500,091,006</span></p>
+                    </div>
+                </div>`,
+            summary: `
+                <h4>Golden Rules for Expanded Form 🏆</h4>
+                <ol>
+                    <li><strong>Start Left:</strong> ⬅️ Begin with the digit in the largest place value on the far left.</li>
+                    <li><strong>Value of the Digit:</strong> 💰 Determine the value of that digit by giving it the correct number of trailing zeros.</li>
+                    <li><strong>Add It Up:</strong> ➕ Write down its value and put a plus sign after it.</li>
+                    <li><strong>Repeat for All:</strong> 🔄 Do this for every single non-zero digit in the number, moving from left to right.</li>
+                    <li><strong>Skip the Zeros:</strong> 🚫 You don't need to write "+ 0" for any digits that are zero. They are silent heroes holding the place for others.</li>
+                </ol>`,
+        },
+        // Lesson 4: Millions in Figures
+        {
+            title: "Counting & Writing Millions in Figures",
+            topicKey: "millions_figures",
+            introduction: `
+                <div class="hook-problem">
+                    <h3>🤔 Have you ever...</h3>
+                    <p>...seen a popular musician's YouTube views listed as "15M views" 📈 and wondered how to write that as a full number? 15M means 15 Million! Let's learn to write these numbers perfectly. ✍️</p>
+                </div>
+                <div class="hook-problem">
+                    <h3>Problem Situation 🤯</h3>
+                    <p>The population of Lagos State is often said to be over "fourteen point eight million" people. As a student working on a social studies project, 👩‍🎓 <span class="important-name">Fatima</span> needs to write this number down in figures. How does she correctly represent "14.8 million"? Is it 14.8? 1,480,000? Or <strong class="math-term">14,800,000</strong>? Getting it right is key! 🔑</p>
+                </div>`,
+            dailyLife: `
+                <details>
+                    <summary>💰 Salaries & Incomes</summary>
+                    <div class="details-content"><p>The annual salaries of top professionals, business owners, and entertainers in Nigeria are often measured in millions of Naira. 💼</p></div>
+                </details>
+                <details>
+                    <summary>🏙️ City Populations</summary>
+                    <div class="details-content"><p>Major Nigerian cities like Lagos, Kano, Ibadan, and Abuja all have populations in the millions. These figures are used for city planning and resource allocation. 🗺️</p></div>
+                </details>
+                <details>
+                    <summary>💸 Cost of Major Projects</summary>
+                    <div class="details-content"><p>Building a school, a hospital, or a small road can cost millions of Naira. These figures are written down in contracts and budgets. 🏗️</p></div>
+                </details>
+                <details>
+                    <summary>🏆 Lottery Winnings</summary>
+                    <div class="details-content"><p>Many lotteries and promotions offer prizes in the millions of Naira. Winners see their prize written in figures on a giant cheque! 🎉</p></div>
+                </details>
+                <details>
+                    <summary>👥 Social Media Followers</summary>
+                    <div class="details-content"><p>Celebrities, politicians, and brands have followers in the millions on platforms like Instagram and Twitter. This is a measure of their influence. 🤳</p></div>
+                </details>`,
+            keyTerms: `
+                <div class="term">
+                    <i class="fa-solid fa-1"></i>
+                    <div class="term-def"><h4>Figures 🔢</h4><p>Writing a number using digits (0-9) instead of words.</p></div>
+                </div>
+                <div class="term">
+                    <i class="fa-solid fa-users-line"></i>
+                    <div class="term-def"><h4>Million 🌽</h4><p>A '1' followed by six zeros: <strong class="math-term">1,000,000</strong>. It is equal to one thousand thousands.</p></div>
+                </div>
+                <div class="term">
+                    <i class="fa-solid fa-circle-0"></i>
+                    <div class="term-def"><h4>Placeholder Zero 🦸‍♂️</h4><p>A zero that is used to hold a place in a number when that place has no value. For example, in <strong class="math-term">502</strong>, the '0' holds the tens place.</p></div>
+                </div>`,
+            stepByStep: `
+                <h4>Let's write "Twenty-five million, four hundred and two thousand, and sixty-seven" in figures.</h4>
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content"><h4>Think in Periods: Millions, Thousands, Units 🧠</h4><p>Set up your mental slots for each three-digit period. <br>___ ___ ___ , ___ ___ ___ , ___ ___ ___ <br><small>(Millions) &nbsp; (Thousands) &nbsp; (Units)</small></p></div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content"><h4>Fill the Millions Period 💰</h4><p>"Twenty-five million" goes into the millions period. Since it's a two-digit number, we write it as <strong class="math-term">25</strong>. <br><strong class="math-term">25</strong>, ___ ___ ___ , ___ ___ ___ </p></div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content"><h4>Fill the Thousands and Units Periods ✍️</h4><p>• "four hundred and two thousand": Put <strong class="math-term">402</strong> in the thousands period. <br>• "and sixty-seven": Put <strong class="math-term">067</strong> in the units period. You must use a zero to hold the hundreds place!</p></div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content"><h4>Put It All Together ✅</h4><p>Combine the numbers from each period, using commas to separate them. <br>The final number is: <span class="final-answer">25,402,067</span></p></div>
+                </div>`,
+            realLifeApp: `
+                <h4>Writing a Property Value 🏡</h4>
+                <p>A real estate agent, 👩‍💼 <span class="important-name">Mrs. Okeke</span>, is listing a new duplex in Lekki. The asking price is "One hundred and fifty-five point five million Naira". How does she write this price tag in figures for the property website? 💻</p>
+                <button class="btn" onclick="toggleVisibility('solution-31')">Show Solution</button>
+                <div id="solution-31" class="solution-box">
+                    <h4>Converting "155.5 million" to figures: 📝</h4>
+                    <ol>
+                        <li><strong>Step 1:</strong> "One hundred and fifty-five million" is <strong class="math-term">155,000,000</strong>.</li>
+                        <li><strong>Step 2:</strong> The ".5 million" means half a million. Half of 1,000,000 is 500,000. This fills the hundred thousands place. 💰</li>
+                        <li><strong>Step 3:</strong> Add the parts: 155,000,000 + 500,000 = 155,500,000.</li>
+                        <li><strong>Answer:</strong> The price is <span class="final-answer">₦155,500,000</span>.</li>
+                    </ol>
+                </div>`,
+            financialLit: `
+                <h4>Calculating a Company's Revenue 📈</h4>
+                <p>A successful Nigerian startup reports its annual revenue as "Thirty-two million, seven hundred and five thousand Naira". The tax office requires this to be filed in figures. What number should be written on the form? 🧾</p>
+                <button class="btn" onclick="toggleVisibility('solution-32')">Show Solution</button>
+                <div id="solution-32" class="solution-box">
+                    <h4>Writing the revenue in figures: ✍️</h4>
+                    <ol>
+                        <li><strong>Millions Period:</strong> "Thirty-two million" -> <strong class="math-term">32</strong>.</li>
+                        <li><strong>Thousands Period:</strong> "seven hundred and five thousand" -> <strong class="math-term">705</strong>.</li>
+                        <li><strong>Units Period:</strong> Nothing was mentioned about units, so we use placeholders -> <strong class="math-term">000</strong>.</li>
+                        <li><strong>Combine them:</strong> 32,705,000.</li>
+                        <li><strong>Answer:</strong> The figure to be filed is <span class="final-answer">₦32,705,000</span>.</li>
+                    </ol>
+                </div>`,
+            mathTricks: `
+                 <div class="pro-tip">
+                    <i class="fa-solid fa-lightbulb"></i>
+                    <div>
+                        <h4>The "Six Zeros" Rule! 💡</h4>
+                        <p>A million is a number followed by 6 other digits. When you hear "8 million", write down <strong class="math-term">8</strong> and then add six zeros: <strong class="math-term">8,000,000</strong>. When you hear "12 million", write <strong class="math-term">12</strong> and make sure there are 6 digits after it: <strong class="math-term">12,000,000</strong>. This helps you quickly get the right number of zeros. 😉</p>
+                    </div>
+                </div>
+                <div class="pitfall">
+                    <i class="fa-solid fa-skull-crossbones"></i>
+                    <div>
+                        <h4>The Pitfall ⚠️</h4>
+                        <p>This is a quick estimate. If the number includes thousands or hundreds (e.g., "8 million, two hundred thousand"), those numbers replace some of the zeros. The answer would be 8,200,000, not 8,000,000 + 200,000. Pay attention! 👀</p>
+                    </div>
+                </div>`,
+            commonMistakes: `
+                <h4>Mistake: Incorrect Number of Zeros 😵</h4>
+                <p>Students often confuse million (6 zeros) with thousand (3 zeros) or billion (9 zeros), leading to a number that is wildly incorrect.</p>
+                <div class="mistake-box">
+                    <div class="wrong-way">
+                        <h4>❌ Wrong Way</h4>
+                        <p>Writing "Five million".</p>
+                        <p>A student might write: 5,000 (five thousand) or 5,000,000,000 (five billion). 🤦</p>
+                    </div>
+                    <div class="right-way">
+                        <h4>✅ Right Way</h4>
+                        <p>Memorize the key numbers: <br>• Thousand = 3 zeros (1,000) <br>• Million = 6 zeros (1,000,000) <br>• Billion = 9 zeros (1,000,000,000) <br>So, "Five million" is correctly written as <span class="final-answer">5,000,000</span>. 👍</p>
+                    </div>
+                </div>`,
+            practice: `
+                <div class="practice-problem">
+                    <h4>🧠 Standard Practice</h4>
+                    <p>Write "one hundred and seven million, ninety-eight thousand, and four" in figures.</p>
+                    <button class="btn" onclick="toggleVisibility('hint-33')">Show Hint</button>
+                    <button class="btn" onclick="toggleVisibility('solution-33')">Show Solution</button>
+                    <div id="hint-33" class="solution-box hint-box"><p>Pay close attention to the units period. "Four" needs placeholder zeros for the hundreds and tens places. 🤔</p></div>
+                    <div id="solution-33" class="solution-box">
+                        <p><strong>Solution:</strong><br>• Millions: 107<br>• Thousands: 098 (placeholder for hundreds place)<br>• Units: 004 (placeholders for hundreds and tens)<br><strong>Answer:</strong> <span class="final-answer">107,098,004</span></p>
+                    </div>
+                </div>
+                <div class="practice-problem">
+                    <h4>🔥 Challenge Problem</h4>
+                    <p>A social media post went viral and got "three and a quarter million" likes. How would you write the number of likes in figures? 👍</p>
+                    <button class="btn" onclick="toggleVisibility('hint-34')">Show Hint</button>
+                    <button class="btn" onclick="toggleVisibility('solution-34')">Show Solution</button>
+                    <div id="hint-34" class="solution-box hint-box"><p>Think about what "a quarter" means as a fraction (1/4) and as a decimal (0.25). What is a quarter of a million (1,000,000)? 🧐</p></div>
+                    <div id="solution-34" class="solution-box">
+                        <p><strong>Solution:</strong><br>1. "Three million" is 3,000,000.<br>2. "A quarter million" means 1/4 of 1,000,000. <br>3. To find 1/4 of 1,000,000, you divide by 4: 1,000,000 ÷ 4 = 250,000.<br>4. Now, add the two parts: 3,000,000 + 250,000.<br><strong>Answer:</strong> <span class="final-answer">3,250,000</span></p>
+                    </div>
+                </div>`,
+            summary: `
+                <h4>Golden Rules for Writing Millions in Figures 🏆</h4>
+                <ol>
+                    <li><strong>Know Your Periods:</strong> 🧠 Remember the order from right to left: Units, Thousands, Millions. Each has three digit slots.</li>
+                    <li><strong>Start with Millions:</strong> ✍️ Write down the number you hear for the millions period first (e.g., "Forty million" -> 40,...).</li>
+                    <li><strong>Fill the Thousands:</strong> ✍️ Next, write the three-digit number for the thousands period (e.g., "sixty-two thousand" -> 062).</li>
+                    <li><strong>Finish with Units:</strong> ✍️ Finally, write the three-digit number for the units period (e.g., "and five" -> 005).</li>
+                    <li><strong>Zero is Your Best Friend:</strong> 🦸 Use zeros as placeholders whenever a place is not mentioned. This is the secret to accuracy!</li>
+                </ol>`,
+        },
+        // Lesson 5: Millions in Words
+        {
+            title: "Counting & Writing Millions in Words",
+            topicKey: "millions_words",
+            introduction: `
+                <div class="hook-problem">
+                    <h3>🤔 Have you ever had to write a cheque?</h3>
+                    <p>When you write a large amount like <span class="currency">₦2,500,000</span>, you must also write it in words: "Two million, five hundred thousand Naira". Learning to do this perfectly is a vital life skill! ✍️📜</p>
+                </div>
+                <div class="hook-problem">
+                    <h3>Problem Situation 🤯</h3>
+                    <p>👨‍💼 <span class="important-name">Olamide</span> just got a new job with an annual salary of <strong class="currency">₦15,240,000</strong>. When filling out her employment forms, she has to write her salary in words for the official record. How does she translate this number into a clear, well-structured sentence?</p>
+                </div>`,
+            dailyLife: `
+                <details>
+                    <summary>📜 Official Documents</summary>
+                    <div class="details-content"><p>Writing numbers in words on cheques, contracts, and legal agreements is a standard practice to prevent fraud and ensure clarity.</p></div>
+                </details>
+                <details>
+                    <summary>🗣️ Public Speaking</summary>
+                    <div class="details-content"><p>When presenting data or financial results, saying the numbers in words ("Our city's population is three point two million") is often clearer and more impactful than just reading out the digits.</p></div>
+                </details>
+                <details>
+                    <summary>📚 Story Telling & Writing</summary>
+                    <div class="details-content"><p>In literature and journalism, large numbers are usually written in words to maintain a smooth reading flow, e.g., "He inherited a fortune of five million dollars."</p></div>
+                </details>
+                <details>
+                    <summary>🏦 Banking</summary>
+                    <div class="details-content"><p>Bank tellers and financial advisors constantly deal with large sums of money and must be fluent in both reading and writing them in words.</p></div>
+                </details>
+                <details>
+                    <summary>✔️ Verification</summary>
+                    <div class="details-content"><p>Having a number in both figures and words provides a way to double-check for accuracy. If they don't match, you know there's a mistake.</p></div>
+                </details>`,
+            keyTerms: `
+                <div class="term">
+                    <i class="fa-solid fa-pen-nib"></i>
+                    <div class="term-def"><h4>In Words 🔡</h4><p>Expressing a number using the alphabet (e.g., "one million") instead of numerical digits (1,000,000).</p></div>
+                </div>
+                <div class="term">
+                    <i class="fa-solid fa-grip"></i>
+                    <div class="term-def"><h4>Period 🏛️</h4><p>A group of three digits in a number, separated by commas. For millions, we care about the Millions, Thousands, and Units periods.</p></div>
+                </div>
+                <div class="term">
+                    <i class="fa-solid fa-asterisk"></i>
+                    <div class="term-def"><h4>Compound Number -</h4><p>A number from 21 to 99 that is written with a hyphen, such as <strong class="math-term">forty-five</strong> or <strong class="math-term">ninety-nine</strong>.</p></div>
+                </div>`,
+            stepByStep: `
+                <h4>Let's write the number <strong class="math-term">8,215,603</strong> in words.</h4>
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content"><h4>Break It Down by Commas ✂️</h4><p>Separate the number into its periods. <br><strong class="math-term">8</strong> , <strong class="math-term">215</strong> , <strong class="math-term">603</strong><br><small>(Millions), (Thousands), (Units)</small></p></div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content"><h4>Read Each Chunk and Add its Name 🗣️</h4><p>Go from left to right. <br>• <strong>8</strong> in the Millions period is "<strong class="math-term">Eight million</strong>". <br>• <strong>215</strong> in the Thousands period is "<strong class="math-term">two hundred and fifteen thousand</strong>". <br>• <strong>603</strong> in the Units period is "<strong class="math-term">six hundred and three</strong>".</p></div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content"><h4>Stitch It All Together 🧵</h4><p>Combine the parts into a single, flowing sentence. Use commas to separate the period names for better readability.<br>The final result is: <span class="final-answer">Eight million, two hundred and fifteen thousand, six hundred and three.</span></p></div>
+                </div>`,
+            realLifeApp: `
+                <h4>Announcing a Company's Profit 📢</h4>
+                <p>The CEO of a successful Nigerian company is announcing the company's annual profit at a press conference. The profit figure on the screen is <span class="currency">₦750,400,000</span>. What should he say to the audience? 🎤</p>
+                <button class="btn" onclick="toggleVisibility('solution-35')">Show Solution</button>
+                <div id="solution-35" class="solution-box">
+                    <h4>Here's how to announce the profit: 🗣️</h4>
+                    <ol>
+                        <li><strong>Number:</strong> 750,400,000</li>
+                        <li><strong>Periods:</strong> 750 (Millions), 400 (Thousands), 000 (Units).</li>
+                        <li><strong>Read each period:</strong>
+                            <ul>
+                                <li>750 in Millions -> "Seven hundred and fifty million"</li>
+                                <li>400 in Thousands -> "four hundred thousand"</li>
+                                <li>The Units period is zero, so we stop. ✅</li>
+                            </ul>
+                        </li>
+                        <li><strong>Combine:</strong> Put the parts together to form a clear statement.</li>
+                        <li><strong>Answer:</strong> He should say, <span class="final-answer">"Our annual profit was seven hundred and fifty million, four hundred thousand Naira."</span></li>
+                    </ol>
+                </div>`,
+            financialLit: `
+                <h4>Writing a Cheque for School Fees 🧾</h4>
+                <p>A parent, 👩 <span class="important-name">Mrs. Adekunle</span>, needs to pay her child's school fees, which amount to <span class="currency">₦1,250,000</span>. She has to write this amount in words on the cheque. What should she write to ensure the bank accepts it? 🏦</p>
+                <button class="btn" onclick="toggleVisibility('solution-36')">Show Solution</button>
+                <div id="solution-36" class="solution-box">
+                    <h4>Here's the correct way to write the cheque: ✍️</h4>
+                    <ol>
+                        <li><strong>Number:</strong> 1,250,000</li>
+                        <li><strong>Periods:</strong> 1 (Millions), 250 (Thousands), 000 (Units).</li>
+                        <li><strong>Read each period:</strong>
+                            <ul>
+                                <li>1 in Millions -> "One million"</li>
+                                <li>250 in Thousands -> "two hundred and fifty thousand"</li>
+                                <li>The Units period is zero, so we don't say anything more. ✅</li>
+                            </ul>
+                        </li>
+                        <li><strong>Combine and Finalize:</strong> It's standard practice to add "Naira Only" at the end of a cheque to prevent additions.</li>
+                        <li><strong>Answer:</strong> She should write <span class="final-answer">One million, two hundred and fifty thousand Naira Only.</span></li>
+                    </ol>
+                </div>`,
+            mathTricks: `
+                 <div class="pro-tip">
+                    <i class="fa-solid fa-lightbulb"></i>
+                    <div>
+                        <h4>The "Read-As-You-See" Trick! 👀</h4>
+                        <p>Ignore the commas for a second. Read the 1, 2, or 3-digit number in a period as if it were a simple number. For <strong class="math-term">45,678,901</strong>, look at the first chunk: <strong class="math-term">45</strong>. Read it: "Forty-five". Then add the family name: "Forty-five <strong class="math-term">million</strong>". Move to the next chunk: <strong class="math-term">678</strong>. Read it: "Six hundred and seventy-eight". Add the family name: "...<strong class="math-term">thousand</strong>". This makes it less intimidating. 😎</p>
+                    </div>
+                </div>
+                <div class="pitfall">
+                    <i class="fa-solid fa-skull-crossbones"></i>
+                    <div>
+                        <h4>The Pitfall ⚠️</h4>
+                        <p>This trick works well, but don't forget to put it all together correctly. A common mistake is to say "...six hundred and seventy-eight <strong class="math-term">and</strong> thousand". The word 'and' doesn't go before the family name, it goes inside the three-digit number itself. 🛑</p>
+                    </div>
+                </div>`,
+            commonMistakes: `
+                <h4>Mistake: Making Numbers Plural 🚫</h4>
+                <p>The "family names" (Thousand, Million, Billion) are never plural, even if the number before them is greater than one. It's a very common mistake.</p>
+                <div class="mistake-box">
+                    <div class="wrong-way">
+                        <h4>❌ Wrong Way</h4>
+                        <p>Writing 6,000,000.</p>
+                        <p>A student writes: "Six million<strong class="math-term">s</strong>".</p>
+                        <p>Or writing 20,000: "Twenty thousand<strong class="math-term">s</strong>".</p>
+                    </div>
+                    <div class="right-way">
+                        <h4>✅ Right Way</h4>
+                        <p>The period names stay singular. <br>• 6,000,000 is "Six <strong class="math-term">million</strong>". <br>• 20,000 is "Twenty <strong class="math-term">thousand</strong>". <br>• 500,000,000 is "Five hundred <strong class="math-term">million</strong>".<br>No 's' at the end! 👍</p>
+                    </div>
+                </div>`,
+            practice: `
+                <div class="practice-problem">
+                    <h4>🧠 Standard Practice</h4>
+                    <p>Write the number <strong class="math-term">99,009,909</strong> in words.</p>
+                    <button class="btn" onclick="toggleVisibility('hint-37')">Show Hint</button>
+                    <button class="btn" onclick="toggleVisibility('solution-37')">Show Solution</button>
+                    <div id="hint-37" class="solution-box hint-box"><p>Break the number 99,009,909 into its three periods. Notice the zero in the middle of each period and handle it correctly. 🤔</p></div>
+                    <div id="solution-37" class="solution-box">
+                        <p><strong>Solution:</strong><br>• 99 (Millions) -> Ninety-nine million<br>• 009 (Thousands) -> nine thousand<br>• 909 (Units) -> nine hundred and nine<br><strong>Answer:</strong> <span class="final-answer">Ninety-nine million, nine thousand, nine hundred and nine.</span></p>
+                    </div>
+                </div>
+                <div class="practice-problem">
+                    <h4>🔥 Challenge Problem</h4>
+                    <p>A company's total assets are valued at <strong class="currency">₦10,010,010</strong>. Write this very specific amount in words for an official audit report. 🧾</p>
+                    <button class="btn" onclick="toggleVisibility('hint-38')">Show Hint</button>
+                    <button class="btn" onclick="toggleVisibility('solution-38')">Show Solution</button>
+                    <div id="hint-38" class="solution-box hint-box"><p>The number is 10,010,010. Break it into millions, thousands, and units. Be careful with how you phrase "010" for the thousands and units periods. 🧐</p></div>
+                    <div id="solution-38" class="solution-box">
+                        <p><strong>Solution:</strong><br>1. <strong>Number:</strong> 10,010,010<br>2. <strong>Periods:</strong> 10 (Millions), 010 (Thousands), 010 (Units).<br>3. <strong>Read each period:</strong><br>   - 10 in Millions -> "Ten million"<br>   - 010 in Thousands -> "ten thousand"<br>   - 010 in Units -> "and ten"<br>
+                        4. <strong>Combine:</strong> Put the phrases together.<br><strong>Answer:</strong> <span class="final-answer">Ten million, ten thousand, and ten.</span></p>
+                    </div>
+                </div>`,
+            summary: `
+                <h4>Golden Rules for Writing Millions in Words 🏆</h4>
+                <ol>
+                    <li><strong>Divide and Conquer:</strong> ✂️ Use commas to split the number into its periods (Millions, Thousands, Units).</li>
+                    <li><strong>Left to Right, Period by Period:</strong> 🗣️ Start with the leftmost period. Read the number in it, then add its "family name" (e.g., "Fifty-two <strong class="math-term">million</strong>").</li>
+                    <li><strong>No Plurals Allowed:</strong> 🚫 Never add an 's' to thousand, million, or billion. It's always "five million", not "five millions".</li>
+                    <li><strong>Master 'And' and Hyphens:</strong> ✍️ Use 'and' after 'hundred' (one hundred <strong class="math-term">and</strong> two). Use a hyphen for numbers between 21 and 99 (seventy<strong class="math-term">-</strong>three).</li>
+                    <li><strong>Combine with Commas:</strong>🔗 Join the word phrases for each period with commas to make the final sentence clear and easy to read.</li>
+                </ol>`,
+        }
+    ];
+
+    // --- DATA: QUIZ QUESTIONS (FILTERED FOR 5 LESSONS) ---
+    const quizPool = [
+        // Ascending Order
+        { topicKey: 'ascending', question: 'Which set of numbers is in correct ascending order? 🧗‍♀️', options: ['105, 205, 150, 300', '400, 350, 250, 150', '50, 150, 250, 350', '900, 800, 700, 600'], correctAnswer: 2, explanation: 'Ascending order means smallest to largest. 50 is the smallest, followed by 150, then 250, and finally 350. Option 3 is the only one that follows this rule.' },
+        { topicKey: 'ascending', question: 'Ade has pocket money from four weeks: ₦1,500, ₦950, ₦2,000, ₦1,250. Arrange these amounts in ascending order. 💰', options: ['₦950, ₦1,250, ₦1,500, ₦2,000', '₦2,000, ₦1,500, ₦1,250, ₦950', '₦950, ₦1,500, ₦1,250, ₦2,000', '₦1,250, ₦950, ₦1,500, ₦2,000'], correctAnswer: 0, explanation: '<ol><li>Step 1: Identify the smallest number. ₦950 has the fewest digits/is smallest.</li><li>Step 2: Compare the remaining numbers. ₦1,250 is next, then ₦1,500.</li><li>Step 3: The largest number is ₦2,000.</li><li>Step 4: The correct order is ₦950, ₦1,250, ₦1,500, ₦2,000.</li></ol>' },
+        
+        // Compare Millions
+        { topicKey: 'compare_millions', question: 'Lagos has a population of about 14,862,000. Kano has about 14,253,000. Which statement is true? 🏙️', options: ['Lagos < Kano', 'Lagos = Kano', 'Kano > Lagos', 'Lagos > Kano'], correctAnswer: 3, explanation: 'Both numbers start with 14 million. We look at the hundred thousands place. Lagos has 8 (800,000) and Kano has 2 (200,000). Since 8 > 2, Lagos has a greater population than Kano.' },
+        { topicKey: 'compare_millions', question: 'Which number is the largest? 🐘', options: ['9,999,999', '10,000,000', '9,999,000', '1,000,009'], correctAnswer: 1, explanation: 'The number 10,000,000 has 8 digits. All other numbers have 7 digits. A number with more digits is always larger.' },
+        
+        // Expanded Form
+        { topicKey: 'expanded_form', question: 'What is 5,021 in expanded form? 🧩', options: ['500 + 20 + 1', '5000 + 200 + 1', '5000 + 20 + 1', '50 + 21'], correctAnswer: 2, explanation: 'The 5 is in the thousands place (5000), the 0 is in the hundreds place, the 2 is in the tens place (20), and the 1 is in the units place (1). So, it is 5000 + 20 + 1.' },
+        { topicKey: 'expanded_form', question: 'The price of a phone is <span class="currency">₦105,300</span>. What is this in expanded form? 📱', options: ['100,000 + 5,000 + 300', '10,000 + 5,000 + 300', '100,000 + 50,000 + 300', '1,000,000 + 5,000 + 300'], correctAnswer: 0, explanation: 'The 1 is in the hundred thousands place (100,000), the 5 is in the thousands place (5,000), and the 3 is in the hundreds place (300). The zeros are placeholders.' },
+        
+        // Millions in Figures
+        { topicKey: 'millions_figures', question: 'How is "Seven million, twenty-two thousand, and five" written in figures? ✍️', options: ['7,22,5', '7,022,005', '7,220,005', '7,022,500'], correctAnswer: 1, explanation: 'Millions period: 7. Thousands period: 022 (twenty-two). Units period: 005 (five). Combining them gives 7,022,005.' },
+        { topicKey: 'millions_figures', question: 'A YouTuber has "3.2 million" subscribers. How many is that in figures? ▶️', options: ['3,200,000', '32,000,000', '3,000,200', '3,200'], correctAnswer: 0, explanation: '3 million is 3,000,000. Point two (.2) of a million is 200,000. Together, they make 3,200,000.' },
+
+        // Millions in Words
+        { topicKey: 'millions_words', question: 'The number 10,500,080 is written as... 🗣️', options: ['Ten million, five hundred and eighty', 'Ten million, five hundred thousand, and eighty', 'One million, five thousand, and eighty', 'Ten billion, five hundred thousand, and eighty'], correctAnswer: 1, explanation: 'The 10 is in the millions period ("Ten million"). The 500 is in the thousands period ("five hundred thousand"). The 080 is in the units period ("and eighty").' },
+        { topicKey: 'millions_words', question: 'What is the correct way to write 2,002,002? 📜', options: ['Two million, two thousand, and two', 'Two million and two thousand and two', 'Two millions, two thousands, two', 'Two thousand, two million, two'], correctAnswer: 0, explanation: 'The first 2 is in the millions period ("Two million"). The second 2 is in the thousands period ("two thousand"). The last 2 is in the units period ("and two").' },
+
+        // More mixed questions for the 5 topics
+        { topicKey: 'ascending', question: 'Which is smaller: 999,999 or 1,000,000? 🤔', options: ['999,999', '1,000,000', 'They are equal', 'Cannot compare'], correctAnswer: 0, explanation: '999,999 has 6 digits, while 1,000,000 has 7 digits. The number with fewer digits is always smaller.' },
+        { topicKey: 'expanded_form', question: 'What is the standard form of 7,000,000 + 40,000 + 300 + 5? 🧩', options: ['7,435', '7,040,305', '7,400,305', '7,004,305'], correctAnswer: 1, explanation: 'We place the 7 in the millions place, 4 in the ten thousands place, 3 in the hundreds place, and 5 in the units place. We use zeros as placeholders for the empty spots (hundred thousands, thousands, tens).' },
+        { topicKey: 'millions_words', question: 'A house costs ₦50,050,005. How would a lawyer write this on a contract? ⚖️', options: ['Fifty million, fifty thousand, and five Naira', 'Fifty million, five thousand, and fifty Naira', 'Fifty thousand, fifty million, and five Naira', 'Five million, fifty thousand, and fifty Naira'], correctAnswer: 0, explanation: 'The 50 is in the millions period ("Fifty million"). The next 50 is in the thousands period ("fifty thousand"). The final 5 is in the units period ("and five").' },
+        { topicKey: 'compare_millions', question: 'Which is larger: 2,345,678 or 2,354,678? 🤔', options: ['2,345,678', '2,354,678', 'They are equal', 'None of the above'], correctAnswer: 1, explanation: 'The numbers are the same until the ten thousands place. The first number has a 4, and the second number has a 5. Since 5 > 4, the second number is larger.' },
+        { topicKey: 'ascending', question: 'Tunde\'s scores are 78, 92, 85, 77. In ascending order, they are:', options: ['92, 85, 78, 77', '77, 78, 85, 92', '77, 85, 78, 92', '78, 77, 85, 92'], correctAnswer: 1, explanation: 'Ascending means smallest to largest. The smallest score is 77, then 78, then 85, and the largest is 92.' },
+        { topicKey: 'expanded_form', question: 'What is 90,000,000 + 5,000 + 40 in standard form?', options: ['90,005,040', '90,050,040', '9,540', '954'], correctAnswer: 0, explanation: 'The 9 is in the ten millions place. There is nothing in the millions or hundred thousands. The 5 is in the thousands place, and 4 in the tens place. Filling the gaps with zeros gives 90,005,040.' },
+        { topicKey: 'millions_figures', question: 'A contract is for "twelve and a half million Naira". Write this in figures.', options: ['₦12,000,500', '₦12,500,000', '₦12,050,000', '₦1,250,000'], correctAnswer: 1, explanation: 'Twelve million is 12,000,000. Half a million is 500,000. Adding them together gives 12,500,000.' },
+        { topicKey: 'ascending', question: 'You are sorting files by size, from smallest to largest. What order are you using?', options: ['Alphabetical order', 'Descending order', 'Random order', 'Ascending order'], correctAnswer: 3, explanation: 'Arranging items from smallest to largest is the definition of ascending order.'},
+        { topicKey: 'compare_millions', question: 'An advert has 2,050,000 views. Another has 2,500,000 views. Which has more views?', options: ['The first advert', 'The second advert', 'They have the same', 'Impossible to know'], correctAnswer: 1, explanation: 'Both numbers have 2 in the millions place. In the hundred thousands place, the first has a 0 and the second has a 5. Since 5 is greater than 0, the second advert has more views.'},
+        { topicKey: 'millions_figures', question: 'The price of a car is "two million, ninety thousand Naira". Write this in figures.', options: ['₦2,900,000', '₦2,000,090', '₦2,090,000', '₦290,000'], correctAnswer: 2, explanation: 'The millions period has 2. The thousands period has ninety, written as 090. The units period is empty, 000. This gives 2,090,000.'},
+        { topicKey: 'millions_words', question: 'How is 6,060,600 written in words?', options: ['Six million, sixty thousand, and six hundred', 'Six hundred and six thousand, and sixty', 'Six million, six thousand, and six hundred', 'Sixty million, six thousand, and six'], correctAnswer: 0, explanation: 'The first 6 is in the millions period. The 60 is in the thousands period. The last 6 is in the hundreds place. This gives "Six million, sixty thousand, and six hundred".'},
+        { topicKey: 'expanded_form', question: 'What is 10,000,000 + 200,000 + 3,000 + 40 in standard form?', options: ['1,234', '10,203,040', '12,340', '10,023,040'], correctAnswer: 1, explanation: 'Placing each value in its correct position gives 1 in the ten millions, 2 in the hundred thousands, 3 in the thousands, and 4 in the tens. Filling the gaps with zeros gives 10,203,040.'},
+    ];
+    
+    // --- JS LOGIC ---
+    const lessonSelect = document.getElementById('lesson-select');
+    
+    // Elements to update
+    const contentIds = [
+        'introduction-content', 'daily-life-content', 'key-terms-content', 
+        'step-by-step-content', 'real-life-app-content', 'financial-lit-content', 
+        'math-tricks-content', 'common-mistakes-content', 'practice-content', 'summary-content'
+    ];
+    
+    const contentElements = {};
+    contentIds.forEach(id => {
+        contentElements[id] = document.getElementById(id);
+    });
+    
+    let currentLessonTopicKey = '';
+    
+    function loadLesson(index) {
+        const lesson = lessonsData[index];
+        if (!lesson) return;
+
+        currentLessonTopicKey = lesson.topicKey;
+
+        contentElements['introduction-content'].innerHTML = lesson.introduction;
+        contentElements['daily-life-content'].innerHTML = lesson.dailyLife;
+        contentElements['key-terms-content'].innerHTML = lesson.keyTerms;
+        contentElements['step-by-step-content'].innerHTML = lesson.stepByStep;
+        contentElements['real-life-app-content'].innerHTML = lesson.realLifeApp;
+        contentElements['financial-lit-content'].innerHTML = lesson.financialLit;
+        contentElements['math-tricks-content'].innerHTML = lesson.mathTricks;
+        contentElements['common-mistakes-content'].innerHTML = lesson.commonMistakes;
+        contentElements['practice-content'].innerHTML = lesson.practice;
+        contentElements['summary-content'].innerHTML = lesson.summary;
+        
+        // Reset quiz when lesson changes
+        resetQuiz();
+    }
+    
+    // --- QUIZ LOGIC ---
+    const quizStartScreen = document.getElementById('quiz-start-screen');
+    const quizMainScreen = document.getElementById('quiz-main-screen');
+    const quizResultsScreen = document.getElementById('quiz-results-screen');
+    const startQuizBtn = document.getElementById('start-quiz-btn');
+    const quizProgress = document.getElementById('quiz-progress');
+    const questionText = document.getElementById('question-text');
+    const optionsContainer = document.getElementById('options-container');
+    const quizFeedback = document.getElementById('quiz-feedback');
+    const explanationText = document.getElementById('explanation-text');
+    const nextQuestionBtn = document.getElementById('next-question-btn');
+    const resetQuizBtn = document.getElementById('reset-quiz-btn');
+    const previewAnswersBtn = document.getElementById('preview-answers-btn');
+    const finalScoreEl = document.getElementById('final-score');
+    const scoreMessageEl = document.getElementById('score-message');
+    
+    let currentQuestions = [];
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let userAnswers = [];
+    
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+    
+    function startQuiz() {
+        const relevantQuestions = quizPool.filter(q => q.topicKey === currentLessonTopicKey);
+        shuffleArray(relevantQuestions);
+        currentQuestions = relevantQuestions.slice(0, 5);
+        
+        if (currentQuestions.length < 5) {
+             console.warn('Warning: Fewer than 5 questions available for this topic.');
+        }
+        if (currentQuestions.length === 0) {
+            questionText.innerHTML = "Oops! No questions available for this topic yet. Please check back later.";
+            quizStartScreen.style.display = 'none';
+            quizMainScreen.style.display = 'block';
+            optionsContainer.innerHTML = "";
+            nextQuestionBtn.style.display = "none";
+            quizFeedback.style.display = "none";
+            return;
+        }
+
+        currentQuestionIndex = 0;
+        score = 0;
+        userAnswers = [];
+        quizStartScreen.style.display = 'none';
+        quizResultsScreen.style.display = 'none';
+        quizMainScreen.style.display = 'block';
+        displayQuestion();
+    }
+    
+    function displayQuestion() {
+        const question = currentQuestions[currentQuestionIndex];
+        quizProgress.textContent = `Question ${currentQuestionIndex + 1} of ${currentQuestions.length}`;
+        questionText.innerHTML = question.question;
+        optionsContainer.innerHTML = '';
+        
+        question.options.forEach((option, index) => {
+            const button = document.createElement('button');
+            button.innerHTML = option;
+            button.className = 'option-btn';
+            button.onclick = () => selectAnswer(index);
+            optionsContainer.appendChild(button);
+        });
+        
+        quizFeedback.style.display = 'none';
+        nextQuestionBtn.style.display = 'none';
+    }
+    
+    function selectAnswer(selectedIndex) {
+        const question = currentQuestions[currentQuestionIndex];
+        const correct = selectedIndex === question.correctAnswer;
+        
+        userAnswers.push({
+            question: question.question,
+            selected: question.options[selectedIndex],
+            correctAnswer: question.options[question.correctAnswer],
+            isCorrect: correct
+        });
+
+        if (correct) {
+            score++;
+        }
+        
+        const optionBtns = optionsContainer.querySelectorAll('.option-btn');
+        optionBtns.forEach((btn, index) => {
+            btn.disabled = true;
+            if (index === question.correctAnswer) {
+                btn.classList.add('correct');
+            } else if (index === selectedIndex && !correct) {
+                btn.classList.add('incorrect');
+            }
+        });
+        
+        explanationText.innerHTML = `<h4 style="color: var(--highlight-yellow); margin-bottom: 10px;">Explanation 💡</h4> ${question.explanation}`;
+        quizFeedback.style.display = 'block';
+        nextQuestionBtn.style.display = 'inline-block';
+    }
+    
+    function nextQuestion() {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < currentQuestions.length) {
+            displayQuestion();
+        } else {
+            endQuiz();
+        }
+    }
+    
+    function endQuiz() {
+        quizMainScreen.style.display = 'none';
+        quizResultsScreen.style.display = 'block';
+        
+        const percentage = Math.round((score / currentQuestions.length) * 100);
+        finalScoreEl.textContent = `${percentage}%`;
+        
+        let message = '';
+        if (percentage === 100) {
+            message = 'Flawless Victory! 🤩 You are a true Maths Champion!';
+            launchConfetti();
+        } else if (percentage >= 80) {
+            message = 'Excellent work! 👏 You have a brilliant understanding of this topic!';
+             launchConfetti();
+        } else if (percentage >= 60) {
+            message = 'Great job! 👍 You\'re well on your way to becoming a master.';
+        } else if (percentage >= 40) {
+            message = 'Good effort! A little more practice and you\'ll nail it. 💪';
+        } else {
+            message = 'Don\'t give up! Every mistake is a chance to learn. Review the answers and try again. 🧠';
+        }
+        scoreMessageEl.textContent = message;
+    }
+    
+    function resetQuiz() {
+        quizResultsScreen.style.display = 'none';
+        quizMainScreen.style.display = 'none';
+        quizStartScreen.style.display = 'block';
+    }
+
+    // --- INITIALIZATION ---
+    function init() {
+        // Clear previous options if any
+        lessonSelect.innerHTML = '';
+        lessonsData.forEach((lesson, index) => {
+            const option = document.createElement('option');
+            option.value = index;
+            option.textContent = lesson.title;
+            lessonSelect.appendChild(option);
+        });
+        
+        lessonSelect.addEventListener('change', (e) => loadLesson(e.target.value));
+        
+        startQuizBtn.addEventListener('click', startQuiz);
+        nextQuestionBtn.addEventListener('click', nextQuestion);
+        resetQuizBtn.addEventListener('click', resetQuiz);
+        
+        // Load the first lesson by default
+        loadLesson(0);
+    }
+    
+    init();
+
+    // --- MODAL & CONFETTI ---
+    const modal = document.getElementById('preview-modal');
+    const span = document.getElementsByClassName("close-modal")[0];
+    const previewContent = document.getElementById('preview-content');
+
+    previewAnswersBtn.onclick = function() {
+        previewContent.innerHTML = '';
+        userAnswers.forEach((ans, index) => {
+            const resultClass = ans.isCorrect ? 'correct' : 'incorrect';
+            const resultSymbol = ans.isCorrect ? '✅' : '❌';
+            previewContent.innerHTML += `
+                <h4>Question ${index + 1}: ${ans.question}</h4>
+                <p>Your answer: <span class="user-answer ${resultClass}">${ans.selected} ${resultSymbol}</span></p>
+                ${!ans.isCorrect ? `<p>Correct answer: <span style="color: var(--accent-green)">${ans.correctAnswer}</span></p>` : ''}
+            `;
+        });
+        modal.style.display = "block";
+    }
+
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+    
+    const confettiContainer = document.getElementById('confetti-container');
+    function launchConfetti() {
+        confettiContainer.innerHTML = '';
+        for (let i = 0; i < 100; i++) {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.left = `${Math.random() * 100}vw`;
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.animationDuration = `${Math.random() * 3 + 4}s`;
+            confetti.style.animationDelay = `${Math.random() * 2}s`;
+            confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+            confettiContainer.appendChild(confetti);
+        }
+        setTimeout(() => confettiContainer.innerHTML = '', 7000);
+    }
+});
+
+// --- GLOBAL HELPER FUNCTIONS ---
+function toggleVisibility(elementId) {
+    const element = document.getElementById(elementId);
+    if (element) {
+        if (element.style.display === 'block') {
+            element.style.display = 'none';
+        } else {
+            element.style.display = 'block';
+        }
+    }
+}
+    </script>
+</body>
+</html>
